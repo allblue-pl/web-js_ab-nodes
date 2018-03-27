@@ -13,8 +13,8 @@ class RepeatNode extends Node
 
     constructor()
     { super();
-        js0.prop(this, RepeatNode.PChildren);
-        js0.prop(this, RepeatNode.PCopyable, arguments);
+        js0.prop(this, RepeatNode.PChildren, this);
+        js0.prop(this, RepeatNode.PCopyable, this, arguments);
 
         this._instances = new js0.List();
     }
@@ -64,7 +64,7 @@ class RepeatNode extends Node
             instance.deactivate();
     }
 
-    getInstanceNodeCopies(source_node, key)
+    getInstanceNodeCopies(sourceNode, key)
     {
         js0.args(arguments, Node, [ 'string', 'number' ]);
 
@@ -73,13 +73,13 @@ class RepeatNode extends Node
 
         let instance = this._instances.get(key);
 
-        let node_copies = [];
-        for (let node_copy of instance._nodeCopies) {
-            if (node_copy.pCopyable.sourceNode === source_node)
-                node_copies.push(node_copy);
+        let nodeCopies = [];
+        for (let nodeCopy of instance._nodeCopies) {
+            if (nodeCopy.pCopyable.sourceNode === sourceNode)
+                nodeCopies.push(nodeCopy);
         }
 
-        return node_copies;
+        return nodeCopies;
     }
 
     pop()
@@ -88,10 +88,10 @@ class RepeatNode extends Node
             throw new Error('Cannot `pop` on empty `RepeatNode`.');
 
         let key = Array.from(this._instances.keys)[this._instances.size - 1];
-        let last_instance = this._instances.get(key);
+        let lastInstance = this._instances.get(key);
 
         if (this.active)
-            last_instance.deactivate();
+            lastInstance.deactivate();
     }
 
     push()
@@ -142,9 +142,14 @@ Object.defineProperties(RepeatNode, {
     PChildren: { value:
     class extends Node.PChildren {
 
+        constructor(node)
+        {
+            super(node);
+        }
+
         __onAddChild(child_node, next_node)
         {
-            js0.implementsE(child_node, Node.PCopyable);
+            js0.typeE(child_node, js0.Prop(Node.PCopyable));
             // js0.args(arguments, js0.Prop(Node.PCopyable), Node);
         }
 

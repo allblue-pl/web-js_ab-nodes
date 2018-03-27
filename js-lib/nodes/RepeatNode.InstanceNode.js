@@ -18,7 +18,7 @@ class RepeatNode_InstanceNode extends Node
     constructor(repeat_node, key)
     { super();
         js0.args(arguments, RepeatNode);
-        js0.prop(this, RepeatNode.InstanceNode.PChildren);
+        js0.prop(this, RepeatNode.InstanceNode.PChildren, this);
         // js0.prop(this, RepeatNode.InstanceNode.PCopyable, this);
 
         this._key = key;
@@ -27,9 +27,9 @@ class RepeatNode_InstanceNode extends Node
         this._nodeCopies = [];
     }
 
-    addNodeCopy(node_copy)
+    addNodeCopy(nodeCopy)
     {
-        this._nodeCopies.push(node_copy);
+        this._nodeCopies.push(nodeCopy);
     }
 
 
@@ -82,13 +82,13 @@ Object.defineProperties(RepeatNode.InstanceNode, {
     {
 
         constructor(node)
-        { super(node);
-
+        { 
+            super(node);
         }
 
         __onAddChild(child_node, next_node)
         {
-            if (this.__main.active)
+            if (this.node.active)
                 child_node.activate();
         }
 
@@ -98,14 +98,14 @@ Object.defineProperties(RepeatNode.InstanceNode, {
             if (next_node !== null)
                 return next_node;
 
-            let instance_index = this.__main._repeatNode._instances.indexOf(
-                    this.__main);
+            let instance_index = this.node._repeatNode._instances.indexOf(
+                    this.node);
             js0.assert(instance_index !== -1, 'Instance not in repeat node.');
 
-            if (instance_index === this.__main._repeatNode._instances.size - 1)
-                return this.__main._repeatNode.nextNode;
+            if (instance_index === this.node._repeatNode._instances.size - 1)
+                return this.node._repeatNode.nextNode;
 
-            return this.__main._repeatNode._instances.getAt(instance_index + 1)
+            return this.node._repeatNode._instances.getAt(instance_index + 1)
                     .firstHtmlElement;
         }
 

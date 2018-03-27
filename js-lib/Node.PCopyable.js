@@ -11,14 +11,20 @@ class Node_PCopyable {
     static get Property() { return 'pCopyable'; }
 
 
+    get node() {
+        return this._node;
+    }
+
     get sourceNode() {
         return this._source;
     }
 
-    constructor(args)
-    {
-        js0.args(arguments, js0.Iterable);
 
+    constructor(node, args)
+    {
+        js0.args(arguments, Node, js0.Iterable);
+
+        this._node = node;
         this.__args = args;
 
         this._copies = [];
@@ -30,75 +36,80 @@ class Node_PCopyable {
         this._listeners_OnDelete = null;
     }
 
-    createCopy(instance_keys, deep_copy = true)
+    createCopy(instanceKeys, deepCopy = true)
     {
         js0.args(arguments, Array, [ 'boolean', js0.Default ]);
         js0.assert(this._source === null, 'Cannot create copy of a copy.');
 
-        // console.log('CREATE NODE', this.__main.constructor.name, instance_keys);
+        // console.log('CREATE NODE', this.node.constructor.name, instanceKeys);
 
-        let node_copy = this.__createCopy(instance_keys);
-        node_copy.pCopyable._source = this.__main;
-        for (let instance_key of instance_keys)
-            node_copy.pCopyable._instanceKeys.push(instance_key);
+        let nodeCopy = this.__createCopy(instanceKeys);
+        nodeCopy.pCopyable._source = this.node;
+        for (let instanceKey of instanceKeys)
+            nodeCopy.pCopyable._instanceKeys.push(instanceKey);
 
-        if (deep_copy && js0.implements(this.__main, Node.PChildren))
-            this.__main.pChildren.createCopy(node_copy, instance_keys);
+        if (deepCopy && js0.type(this.node, js0.Prop(Node.PChildren)))
+            this.node.pChildren.createCopy(nodeCopy, instanceKeys);
 
-        this._copies.push(node_copy);
+        this._copies.push(nodeCopy);
 
         if (this._listeners_OnCreate !== null)
-            this._listeners_OnCreate(node_copy);
+            this._listeners_OnCreate(nodeCopy);
 
-        return node_copy;
+        return nodeCopy;
     }
 
-    deleteCopies(instance_keys, deep_delete = true)
+    deleteCopies(instanceKeys, deepDelete = true)
     {
         js0.args(arguments, Array, [ 'boolean', js0.Default ]);
         js0.assert(this._source === null, 'Cannot create copy of a copy.');
 
         for (let i = this._copies.length - 1; i >= 0; i--) {
-            if (!this._copies[i].pCopyable.matchInstanceKeys(instance_keys, false))
+            if (!this._copies[i].pCopyable.matchInstanceKeys(instanceKeys, false))
                 continue;
 
             this._copies.splice(i, 1);
         }
 
-        if (deep_delete && js0.implements(this.__main, Node.PChildren))
-            this.__main.pChildren.deleteCopies(this.__main, instance_keys);
+        if (deepDelete && js0.type(this.node, js0.Prop(Node.PChildren)))
+            this.node.pChildren.deleteCopies(this.node, instanceKeys);
     }
 
-    getNodeCopies(instance_keys = null)
+    getInstanceKeys()
+    {
+        return this._instanceKeys.slice();
+    }
+
+    getNodeCopies(instanceKeys = null)
     {
         js0.args(arguments, [ Array, js0.Default ]);
 
-        if (instance_keys === null)
+        if (instanceKeys === null)
             return this._copies.slice();
 
         // console.log('QQQ', this._copies.length);
 
-        let node_copies = [];
-        for (let node_copy of this._copies) {
+        let nodeCopies = [];
+        for (let nodeCopy of this._copies) {
             // console.log('WTF?');
-            // console.log('Bam', instance_keys, node_copy.pCopyable._instanceKeys);
-            if (node_copy.pCopyable.matchInstanceKeys(instance_keys))
-                node_copies.push(node_copy);
+            // console.log('Bam', instanceKeys, nodeCopy.pCopyable._instanceKeys);
+            if (nodeCopy.pCopyable.matchInstanceKeys(instanceKeys))
+                nodeCopies.push(nodeCopy);
         }
 
-        return node_copies;
+        return nodeCopies;
     }
 
     getOriginalNode()
     {
-        let source_node = this.__main;
-        while (source_node.pCopyable._source !== null)
-            source_node = this._source;
+        let sourceNode = this.node;
+        while (sourceNode.pCopyable._source !== null)
+            sourceNode = this._source;
 
-        return source_node;
+        return sourceNode;
     }
 
-    matchInstanceKeys(instance_keys, exact = true)
+    matchInstanceKeys(instanceKeys, exact = true)
     {
         js0.args(arguments, Array);
 
@@ -106,51 +117,53 @@ class Node_PCopyable {
             throw new Error(`\`matchInstanceKeys\` on node that is not a copy.`);
 
         if (exact) {
-            if (instance_keys.length !== this._instanceKeys.length)
+            if (instanceKeys.length !== this._instanceKeys.length)
                 return false;
         }
 
-        for (let i = 0; i < instance_keys.length; i++) {
-            if (instance_keys[i] === null)
+        for (let i = 0; i < instanceKeys.length; i++) {
+            if (instanceKeys[i] === null)
                 continue;
 
-            if (instance_keys[i] !== this._instanceKeys[i])
+            if (instanceKeys[i] !== this._instanceKeys[i])
                 return false;
         }
 
         return true;
     }
 
-    onCreate(on_create_listener)
+    onCreate(onCreateListener)
     {
-        this._listeners_OnCreate = on_create_listener;
+        this._listeners_OnCreate = onCreateListener;
     }
 
-    onDelete(on_delete_listener)
+    onDelete(onDeleteListener)
     {
-        this._listeners_OnDelete = on_delete_listener;
+        this._listeners_OnDelete = onDeleteListener;
     }
 
 
-    __addInstance(key, instance_node)
+    __addInstance(key, instanceNode)
     {
         js0.args(arguments, [ 'string', 'number' ],
                 require('./nodes/RepeatNode').InstanceNode);
 
         this._instanceInfos.push({
             key: key,
-            instanceNode: instance_node
+            instanceNode: instanceNode
         });
+
+        instanceNode.addNodeCopy(this.node);
     }
 
-    // __setSourceNode(source_node)
+    // __setSourceNode(sourceNode)
     // {
     //     js0.args(arguments, Node);
     //
-    //     this._source = source_node;
+    //     this._source = sourceNode;
     // }
 
-    __createCopy(instance_keys) { js0.virtual(this); }
+    __createCopy(instanceKeys) { js0.virtual(this); }
 
 }});
 module.exports = Node.PCopyable;

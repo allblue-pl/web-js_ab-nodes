@@ -9,12 +9,12 @@ const Node = require('../Node');
 class RootNode extends Node
 {
 
-    constructor(html_element)
+    constructor(htmlElement)
     { super();
         js0.args(arguments, HTMLElement);
-        js0.prop(this, RootNode.PChildren);
+        js0.prop(this, RootNode.PChildren, this);
 
-        this._htmlElement = html_element;
+        this._htmlElement = htmlElement;
     }
 
 
@@ -44,9 +44,6 @@ class RootNode extends Node
     }
     /* / Node.IListener */
 
-
-
-
 }
 module.exports = RootNode;
 
@@ -57,10 +54,15 @@ Object.defineProperties(RootNode, {
     class RootNode_PChildren extends Node.PChildren
     {
 
-        __onAddChild(child_node)
+        constructor(node)
         {
-            if (this.__main.active)
-                child_node.activate();
+            super(node);
+        }
+
+        __onAddChild(childNode)
+        {
+            if (this.node.active)
+                childNode.activate();
         }
 
     }},

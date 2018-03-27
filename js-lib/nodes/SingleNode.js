@@ -9,13 +9,13 @@ const Node = require('../Node');
 class SingleNode extends Node
 {
 
-    constructor(html_element_type)
+    constructor(htmlElementType)
     { super();
         js0.args(arguments, 'string');
-        js0.prop(this, SingleNode.PChildren);
-        js0.prop(this, SingleNode.PCopyable, arguments);
+        js0.prop(this, SingleNode.PChildren, this);
+        js0.prop(this, SingleNode.PCopyable, this, arguments);
 
-        this._htmlElement = document.createElement(html_element_type);
+        this._htmlElement = document.createElement(htmlElementType);
     }
 
 
@@ -57,9 +57,14 @@ Object.defineProperties(SingleNode, {
     class SingleNode_PChildren extends Node.PChildren
     {
 
-        __onAddChild(child_node, next_node)
+        constructor(node)
         {
-            child_node.activate();
+            super(node);
+        }
+
+        __onAddChild(childNode, next_node)
+        {
+            childNode.activate();
         }
 
     }},
@@ -68,6 +73,11 @@ Object.defineProperties(SingleNode, {
     PCopyable: { value:
     class SingleNode_PCopyable extends Node.PCopyable
     {
+
+        constructor(node, args)
+        {
+            super(node, args);
+        }
 
         __createCopy(deep_copy, node_instances)
         {

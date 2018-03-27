@@ -4,25 +4,25 @@
 class HtmlElement
 {
 
-    static AddChild(parent_html_element, html_element, next_html_element = null)
+    static AddChild(parentHtmlElement, htmlElement, nextHtmlElement = null)
     {
-        // console.log(parent_html_element, html_element, next_html_element);
+        // console.log(parentHtmlElement, htmlElement, nextHtmlElement);
 
-        if (next_html_element === null)
-            parent_html_element.appendChild(html_element);
+        if (nextHtmlElement === null)
+            parentHtmlElement.appendChild(htmlElement);
         else
-            parent_html_element.insertBefore(html_element, next_html_element);
+            parentHtmlElement.insertBefore(htmlElement, nextHtmlElement);
     }
 
-    static ClearChildren(html_element)
+    static ClearChildren(htmlElement)
     {
-        while (html_element.firstChild)
-            html_element.removeChild(html_element.firstChild);
+        while (htmlElement.firstChild)
+            htmlElement.removeChild(htmlElement.firstChild);
     }
 
-    static RemoveChild(parent_html_element, html_element)
+    static RemoveChild(parentHtmlElement, htmlElement)
     {
-        parent_html_element.removeChild(html_element);
+        parentHtmlElement.removeChild(htmlElement);
     }
 
 }

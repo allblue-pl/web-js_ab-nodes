@@ -19,7 +19,7 @@ class TextNode extends Node
 
     constructor(text)
     { super();
-        js0.prop(this, TextNode.PCopyable, arguments);
+        js0.prop(this, TextNode.PCopyable, this, arguments);
 
         this._text = text;
         this._htmlElement = document.createTextNode(text);
@@ -65,8 +65,8 @@ Object.defineProperties(TextNode, {
     {
 
         constructor(node, args)
-        { super(node, args);
-
+        {
+            super(node, args);
         }
 
         __createCopy() {

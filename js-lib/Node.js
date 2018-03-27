@@ -11,23 +11,23 @@ class Node
     }
 
     get firstHtmlElement() {
-        let first_html_element = this.__getFirstHtmlElement();
-        if (!js0.var(first_html_element, HTMLElement)) {
+        let firstHtmlElement = this.__getFirstHtmlElement();
+        if (!js0.type(firstHtmlElement, [ HTMLElement, Text, js0.Null ])) {
             throw new Error(`\`__getFirstHtmlElement\` in \`${this.constructor.name}\`` +
                     `does not return \`HTMLElement\`.`);
         }
 
-        return first_html_element;
+        return firstHtmlElement;
     }
 
     get htmlElement() {
-        let html_element = this.__getHtmlElement();
-        if (!js0.var(html_element, HTMLElement)) {
+        let htmlElement = this.__getHtmlElement();
+        if (!js0.type(htmlElement, HTMLElement)) {
             throw new Error(`\`__getHtmlElement\` in \`${this.constructor.name}\`` +
                     `does not return \`HTMLElement\`.`);
         }
 
-        return html_element;
+        return htmlElement;
     }
 
     get nextHtmlElement() {
