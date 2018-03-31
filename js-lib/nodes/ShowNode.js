@@ -35,7 +35,8 @@ class ShowNode extends Node
 
     constructor()
     { super();
-        js0.prop(this, ShowNode.PChildren);
+        js0.prop(this, ShowNode.PChildren, this);
+        js0.prop(this, ShowNode.PCopyable, this, arguments);
 
         this._show = false;
     }
@@ -86,12 +87,17 @@ Object.defineProperties(ShowNode, {
     class ShowNode_PChildren extends Node.PChildren
     {
 
+        constructor(node)
+        { super(node);
+
+        }
+
         __onAddChild(child_node, next_node)
         {
             // if (next_node === null)
             //     child_node._nextNode = this._nextNode;
 
-            if (this.__main.active && this.__main.show)
+            if (this.node.active && this.node.show)
                 child_node.activate();
         }
 
@@ -101,7 +107,27 @@ Object.defineProperties(ShowNode, {
             if (next_node !== null)
                 return next_node;
 
-            return this.__main.nextNode;
+            return this.node.nextNode;
+        }
+
+    }},
+
+});
+
+
+Object.defineProperties(ShowNode, {
+
+    PCopyable: { value:
+    class ShowNode_PCopyable extends Node.PCopyable {
+
+        constructor(node, args)
+        { super(node, args);
+
+        }
+
+        __createCopy(deepCopy, nodeInstances)
+        {
+            return new ShowNode();
         }
 
     }},

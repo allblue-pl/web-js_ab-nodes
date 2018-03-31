@@ -79,7 +79,7 @@ Object.defineProperties(SingleNode, {
             super(node, args);
         }
 
-        __createCopy(deep_copy, node_instances)
+        __createCopy(deepCopy, nodeInstances)
         {
             return new SingleNode(this.__args[0]);
         }

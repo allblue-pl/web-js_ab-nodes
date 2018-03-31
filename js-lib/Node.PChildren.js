@@ -102,18 +102,30 @@ class Node_PChildren {
 
     findNext(childNode)
     {
-        let childNode_index = this._children.indexOf(childNode);
-        js0.assert(childNode_index !== -1, '`childNode` not found.');
+        let childNodeIndex = this._children.indexOf(childNode);
+        js0.assert(childNodeIndex !== -1, '`childNode` not found.');
 
-        if (childNode_index < this._children.length - 1)
-            return this._children[childNode_index + 1];
+        if (childNodeIndex < this._children.length - 1)
+            return this._children[childNodeIndex + 1];
 
         return null;
     }
 
-    get(childNode_index)
+    get(childNodeIndex)
     {
-        return this._children[childNode_index];
+        return this._children[childNodeIndex];
+    }
+
+    remove(childNode)
+    {
+        js0.args(arguments, Node);
+
+        for (let i = 0; i < this._children.length; i++) {
+            if (this._children[i] === childNode) {
+                childNode.deactivate();
+                this._children.splice(i, 1);
+            }
+        }
     }
 
     __getNext(childNode)

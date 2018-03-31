@@ -32,8 +32,8 @@ class Node_PCopyable {
         this._source = null;
         this._instanceKeys = [];
 
-        this._listeners_OnCreate = null;
-        this._listeners_OnDelete = null;
+        this._listeners_OnCreate = [];
+        this._listeners_OnDelete = [];
     }
 
     createCopy(instanceKeys, deepCopy = true)
@@ -53,8 +53,8 @@ class Node_PCopyable {
 
         this._copies.push(nodeCopy);
 
-        if (this._listeners_OnCreate !== null)
-            this._listeners_OnCreate(nodeCopy);
+        for (let listener of this._listeners_OnCreate)
+            listener(nodeCopy);
 
         return nodeCopy;
     }
@@ -134,12 +134,12 @@ class Node_PCopyable {
 
     onCreate(onCreateListener)
     {
-        this._listeners_OnCreate = onCreateListener;
+        this._listeners_OnCreate.push(onCreateListener);
     }
 
     onDelete(onDeleteListener)
     {
-        this._listeners_OnDelete = onDeleteListener;
+        this._listeners_OnDelete.push(onDeleteListener);
     }
 
 
