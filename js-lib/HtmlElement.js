@@ -6,8 +6,6 @@ class HtmlElement
 
     static AddChild(parentHtmlElement, htmlElement, nextHtmlElement = null)
     {
-        // console.log(parentHtmlElement, htmlElement, nextHtmlElement);
-
         if (nextHtmlElement === null)
             parentHtmlElement.appendChild(htmlElement);
         else

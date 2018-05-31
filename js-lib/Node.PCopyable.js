@@ -54,7 +54,7 @@ class Node_PCopyable {
         this._copies.push(nodeCopy);
 
         for (let listener of this._listeners_OnCreate)
-            listener(nodeCopy);
+            listener(nodeCopy, instanceKeys);
 
         return nodeCopy;
     }

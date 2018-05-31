@@ -29,13 +29,13 @@ class RepeatNode extends Node
         this._instances.set(key, instance);
         let original_node = this.pCopyable.getOriginalNode();
 
-        let instance_keys = this.pCopyable._instanceKeys.concat([ key ]);
+        let instanceKeys = this.pCopyable._instanceKeys.concat([ key ]);
         for (let i = 0; i < original_node.pChildren.length; i++) {
-            let new_child_node = original_node.pChildren.get(i).pCopyable
-                    .createCopy(instance_keys);
-            instance.pChildren.add(new_child_node);
+            let newChildNode = original_node.pChildren.get(i).pCopyable
+                    .createCopy(instanceKeys);
+            instance.pChildren.add(newChildNode);
         }
-
+            
         if (this.active)
             instance.activate();
     }
@@ -49,15 +49,15 @@ class RepeatNode extends Node
         this._instances.delete(key);
 
         let original_node = this.pCopyable.getOriginalNode();
-        let instance_keys = this.pCopyable._instanceKeys.concat([ key ]);
+        let instanceKeys = this.pCopyable._instanceKeys.concat([ key ]);
         for (let i = 0; i < original_node.pChildren.length; i++)
-            original_node.pChildren.get(i).pCopyable.deleteCopies(instance_keys);
+            original_node.pChildren.get(i).pCopyable.deleteCopies(instanceKeys);
         //
         // for (let i = 0; i < original_node.pChildren.length; i++) {
         //
-        //     let new_child_node = original_node.pChildren.get(i).pCopyable.createCopy(
+        //     let newChildNode = original_node.pChildren.get(i).pCopyable.createCopy(
         //             true, this.pCopyable._instanceKeys.concat([ key ]));
-        //     instance.pChildren.add(new_child_node);
+        //     instance.pChildren.add(newChildNode);
         // }
 
         if (this.active)
@@ -115,7 +115,7 @@ class RepeatNode extends Node
 
     __onDeactivate()
     {
-        for (let i = this._instances.size - 1; i > 0; i--)
+        for (let i = this._instances.size - 1; i >= 0; i--)
             this._instances.getAt(i).deactivate();
     }
 
@@ -147,17 +147,17 @@ Object.defineProperties(RepeatNode, {
             super(node);
         }
 
-        __onAddChild(child_node, next_node)
+        __onAddChild(childNode, nextNode)
         {
-            js0.typeE(child_node, js0.Prop(Node.PCopyable));
+            js0.typeE(childNode, js0.Prop(Node.PCopyable));
             // js0.args(arguments, js0.Prop(Node.PCopyable), Node);
         }
 
-        __getNext(child_node)
+        __getNext(childNode)
         {
-            let next_node = this.findNext(child_node);
-            if (next_node !== null)
-                return next_node;
+            let nextNode = this.findNext(childNode);
+            if (nextNode !== null)
+                return nextNode;
 
             return this.nextNode;
         }
@@ -169,7 +169,7 @@ Object.defineProperties(RepeatNode, {
     class RepeatNode_PCopyable extends Node.PCopyable
     {
 
-        __createCopy(node_instances)
+        __createCopy(nodeInstance)
         {
             return new RepeatNode();
         }

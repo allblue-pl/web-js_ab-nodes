@@ -17,6 +17,8 @@ class Node
                     `does not return \`HTMLElement\`.`);
         }
 
+        // console.log('Test2', firstHtmlElement);
+
         return firstHtmlElement;
     }
 

@@ -86,27 +86,26 @@ Object.defineProperties(RepeatNode.InstanceNode, {
             super(node);
         }
 
-        __onAddChild(child_node, next_node)
+        __onAddChild(childNode, nextNode)
         {
             if (this.node.active)
-                child_node.activate();
+                childNode.activate();
         }
 
-        __getNext(child_node)
+        __getNext(childNode)
         {
-            let next_node = this.findNext(child_node);
-            if (next_node !== null)
-                return next_node;
+            let nextNode = this.findNext(childNode);
+            if (nextNode !== null)
+                return nextNode;
 
-            let instance_index = this.node._repeatNode._instances.indexOf(
+            let instanceIndex = this.node._repeatNode._instances.indexOf(
                     this.node);
-            js0.assert(instance_index !== -1, 'Instance not in repeat node.');
+            js0.assert(instanceIndex !== -1, 'Instance not in repeat node.');
 
-            if (instance_index === this.node._repeatNode._instances.size - 1)
+            if (instanceIndex === this.node._repeatNode._instances.size - 1)
                 return this.node._repeatNode.nextNode;
 
-            return this.node._repeatNode._instances.getAt(instance_index + 1)
-                    .firstHtmlElement;
+            return this.node._repeatNode._instances.getAt(instanceIndex + 1);
         }
 
     }},

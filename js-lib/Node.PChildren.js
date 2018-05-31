@@ -87,7 +87,7 @@ class Node_PChildren {
 
                 childNode.pCopyable.deleteCopies(instanceKeys, false);
 
-                if (!js0.implements(childNode, Node.PChildren))
+                if (!js0.type(childNode, js0.Prop(Node.PChildren)))
                     continue;
 
                 originalNodesStack.push(childNode);
