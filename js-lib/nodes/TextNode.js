@@ -27,16 +27,23 @@ class TextNode extends Node
 
 
     /* Node */
+    __isDisplayed()
+    {
+        return this.parentNode.displayed && this.active;
+    }
+
     __onActivate()
     {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         HtmlElement.AddChild(this.parentNode.htmlElement, this._htmlElement,
                 this.nextHtmlElement);
+        this.refreshDisplayed();
     }
 
     __onDeactivate()
     {
+        this.refreshDisplayed();
         HtmlElement.RemoveChild(this.parentNode.htmlElement, this._htmlElement);
     }
 

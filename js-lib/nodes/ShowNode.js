@@ -13,15 +13,17 @@ class ShowNode extends Node
         return this._show;
     }
 
-    set show(show_value)
+    set show(showValue)
     {
         js0.args(arguments, 'boolean');
 
-        if (show_value === this._show)
+        if (showValue === this._show)
             return;
-        this._show = show_value;
+        this._show = showValue;
 
-        if (show_value) {
+        this.refreshDisplayed();
+
+        if (showValue) {
             if (this.active) {
                 for (let i = 0; i < this.pChildren.length; i++)
                     this.pChildren.get(i).activate();
@@ -43,6 +45,11 @@ class ShowNode extends Node
 
 
     /* Node */
+    __isDisplayed()
+    {
+        return this.parentNode.displayed && this.active && this.show;
+    }
+
     __onActivate()
     {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
@@ -50,6 +57,7 @@ class ShowNode extends Node
         if (!this.show)
             return;
 
+        this.refreshDisplayed();
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).activate();
     }
@@ -59,6 +67,7 @@ class ShowNode extends Node
         if (!this.show)
             return;
 
+        this.refreshDisplayed();
         for (let i = this.pChildren.length - 1; i >= 0; i--)
             this.pChildren.get(i).deactivate();
     }

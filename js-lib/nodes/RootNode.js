@@ -19,20 +19,6 @@ class RootNode extends Node
 
 
     /* Node.IListener */
-    __onActivate()
-    {
-        HtmlElement.ClearChildren(this._htmlElement);
-
-        for (let i = 0; i < this.pChildren.length; i++)
-            this.pChildren.get(i).activate();
-    }
-
-    __onDeactivate()
-    {
-        for (let i = 0; i < this.pChildren.length; i++)
-            this.pChildren.get(i).deactivate();
-    }
-
     __getHtmlElement()
     {
         return this._htmlElement;
@@ -41,6 +27,27 @@ class RootNode extends Node
     __getFirstHtmlElement()
     {
         return this._htmlElement;
+    }
+
+    __isDisplayed()
+    {
+        return this.active;
+    }
+
+    __onActivate()
+    {
+        HtmlElement.ClearChildren(this._htmlElement);
+
+        this.refreshDisplayed();
+        for (let i = 0; i < this.pChildren.length; i++)
+            this.pChildren.get(i).activate();
+    }
+
+    __onDeactivate()
+    {
+        this.refreshDisplayed();
+        for (let i = 0; i < this.pChildren.length; i++)
+            this.pChildren.get(i).deactivate();
     }
     /* / Node.IListener */
 

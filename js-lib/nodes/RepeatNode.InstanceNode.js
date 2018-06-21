@@ -15,7 +15,7 @@ class RepeatNode_InstanceNode extends Node
         return this._key;
     }
 
-    constructor(repeat_node, key)
+    constructor(repeatNode, key)
     { super();
         js0.args(arguments, RepeatNode);
         js0.prop(this, RepeatNode.InstanceNode.PChildren, this);
@@ -23,7 +23,7 @@ class RepeatNode_InstanceNode extends Node
 
         this._key = key;
 
-        this._repeatNode = repeat_node;
+        this._repeatNode = repeatNode;
         this._nodeCopies = [];
     }
 
@@ -34,6 +34,11 @@ class RepeatNode_InstanceNode extends Node
 
 
     /* Node */
+    __isDisplayed()
+    {
+        return this._repeatNode.displayed && this.active;
+    }
+
     __onActivate()
     {
         for (let i = 0; i < this.pChildren.length; i++)

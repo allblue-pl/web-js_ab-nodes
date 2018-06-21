@@ -10,6 +10,10 @@ class Node
         return this._active;
     }
 
+    get displayed() {
+        return this._displayed;
+    }
+
     get firstHtmlElement() {
         let firstHtmlElement = this.__getFirstHtmlElement();
         if (!js0.type(firstHtmlElement, [ HTMLElement, Text, js0.Null ])) {
@@ -51,34 +55,70 @@ class Node
     constructor()
     {
         this._active = false;
-        this._listener = null;
+        this._displayed = false;
+        
         this._parentNode = null;
+
+        this._listeners_OnDisplay = [];
     }
 
     activate()
     {
         if (this.active)
             return;
+        this._active = true;
 
         this.__onActivate();
-        this._active = true;
+    }
+
+    addListener_OnDisplay(listener)
+    {
+        this._listeners_OnDisplay.push(listener);
     }
 
     deactivate()
     {
         if (!this.active)
             return;
+        this._active = false;
 
         this.__onDeactivate();
-        this._active = false;
+    }
+
+    refreshDisplayed(refreshChildren = false)
+    {
+        let displayed = this.__isDisplayed();
+        if (this._displayed === displayed)
+            return;
+
+        this._displayed = displayed;
+        for (let listener of this._listeners_OnDisplay)
+            listener(displayed);
+
+        if (refreshChildren) {
+            if (js0.type(this, js0.Prop(Node.PChildren))) {
+                for (let i = 0; i < this.pChildren.length; i++)
+                    this.pChildren.get(i).refreshDisplayed(true);
+            }
+        }
+    }
+
+    removeListener_OnDisplay(listener)
+    {
+        for (let i = this._listeners_OnDisplay.length - 1; i >= 0; i--) {
+            if (this._listeners_OnDisplay[i] === listener)
+                this._listeners_OnDisplay.splice(i, 1);
+        }
     }
 
 
-    __onActivate() { js0.virtual(); }
-    __onDeactivate() { js0.virtual(); }
+    __getHtmlElement() { js0.virtual(this); }
+    __getFirstHtmlElement() { js0.virtual(this); }
 
-    __getHtmlElement() { js0.virtual(); }
-    __getFirstHtmlElement() { js0.virtual(); }
+    __isDisplayed() { js0.virtual(this); }
+
+    __onActivate() { js0.virtual(this); }
+    __onDeactivate() { js0.virtual(this); }
 
 }
 module.exports = Node;

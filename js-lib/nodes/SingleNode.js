@@ -20,16 +20,29 @@ class SingleNode extends Node
 
 
     /* Node */
+    __isDisplayed()
+    {
+        return this.parentNode.displayed && this.active;
+    }
+
     __onActivate()
     {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         HtmlElement.AddChild(this.parentNode.htmlElement, this._htmlElement,
                 this.nextHtmlElement);
+
+        this.refreshDisplayed();
+        for (let i = 0; i < this.pChildren.length; i++)
+            this.pChildren.get(i).refreshDisplayed(true);
     }
 
     __onDeactivate()
     {
+        this.refreshDisplayed();
+        for (let i = this.pChildren.length - 1; i >= 0; i--)
+            this.pChildren.get(i).refreshDisplayed(true);
+
         HtmlElement.RemoveChild(this.parentNode.htmlElement, this._htmlElement);
     }
 

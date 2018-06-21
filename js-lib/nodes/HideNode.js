@@ -11,17 +11,19 @@ class HideNode extends Node
     get hide() {
         return this._hide;
     }
-    set hide(hide_value) {
+    set hide(hideValue) {
         js0.args(arguments, 'boolean');
 
-        if (hide_value === this._hide)
+        if (hideValue === this._hide)
             return;
-        this._hide = hide_value;
+        this._hide = hideValue;
 
-        if (hide_value) {
+        this.refreshDisplayed();
+
+        if (hideValue) {
             if (this.active) {
                 for (let i = 0; i < this.pChildren.length; i++)
-                    this.pChildren.get(i).activate();w
+                    this.pChildren.get(i).activate();
             }
         } else {
             for (let i = 0; i < this.pChildren.length; i++)
@@ -39,6 +41,11 @@ class HideNode extends Node
 
 
     /* Node */
+    __isDisplayed()
+    {
+        return this.parentNode.displayed && this.active && !this.hide;
+    }
+
     __onActivate()
     {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
@@ -46,6 +53,7 @@ class HideNode extends Node
         if (!this.show)
             return;
 
+        this.refreshDisplayed();
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).activate();
     }
@@ -55,6 +63,7 @@ class HideNode extends Node
         if (!this.show)
             return;
 
+        this.refreshDisplayed();
         for (let i = this.pChildren.length - 1; i >= 0; i--)
             this.pChildren.get(i).deactivate();
     }
@@ -83,20 +92,20 @@ Object.defineProperties(HideNode, {
     class HideNode_PChildren extends Node.PChildren
     {
 
-        __onAddChild(child_node, next_node)
+        __onAddChild(childNode, nextNode)
         {
-            // if (next_node === null)
-            //     child_node._nextNode = this._nextNode;
+            // if (nextNode === null)
+            //     childNode._nextNode = this._nextNode;
 
             if (this.__main.active && this.__main.show)
-                child_node.activate();
+                childNode.activate();
         }
 
-        __getNext(child_node)
+        __getNext(childNode)
         {
-            let next_node = this.findNext(child_node);
-            if (next_node !== null)
-                return next_node;
+            let nextNode = this.findNext(childNode);
+            if (nextNode !== null)
+                return nextNode;
 
             return this.__main.nextNode;
         }
