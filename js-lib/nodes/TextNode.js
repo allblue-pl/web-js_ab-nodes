@@ -29,7 +29,10 @@ class TextNode extends Node
     /* Node */
     __isDisplayed()
     {
-        return this.parentNode.displayed && this.active;
+        if (!this.active)
+            return false;
+
+        return this.parentNode.displayed;
     }
 
     __onActivate()

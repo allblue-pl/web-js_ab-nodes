@@ -8,13 +8,10 @@ const Node = require('../Node');
 class ShowNode extends Node
 {
 
-    get show()
-    {
+    get show() {
         return this._show;
     }
-
-    set show(showValue)
-    {
+    set show(showValue) {
         js0.args(arguments, 'boolean');
 
         if (showValue === this._show)
@@ -47,7 +44,10 @@ class ShowNode extends Node
     /* Node */
     __isDisplayed()
     {
-        return this.parentNode.displayed && this.active && this.show;
+        if (!this.active || !this.show)
+            return false;
+
+        return this.parentNode.displayed;
     }
 
     __onActivate()

@@ -23,18 +23,19 @@ class HideNode extends Node
         if (hideValue) {
             if (this.active) {
                 for (let i = 0; i < this.pChildren.length; i++)
-                    this.pChildren.get(i).activate();
+                    this.pChildren.get(i).deactivate();
             }
         } else {
             for (let i = 0; i < this.pChildren.length; i++)
-                this.pChildren.get(i).deactivate();
+                this.pChildren.get(i).activate();
         }
     }
 
 
     constructor()
     { super();
-        js0.prop(this, HideNode.PChildren);
+        js0.prop(this, HideNode.PChildren, this);
+        js0.prop(this, HideNode.PCopyable, this, arguments);
 
         this._hide = false;
     }
@@ -43,14 +44,17 @@ class HideNode extends Node
     /* Node */
     __isDisplayed()
     {
-        return this.parentNode.displayed && this.active && !this.hide;
+        if (!this.active || this.hide)
+            return false;
+
+        return this.parentNode.displayed;
     }
 
     __onActivate()
     {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
-        if (!this.show)
+        if (this.hide)
             return;
 
         this.refreshDisplayed();
@@ -60,7 +64,7 @@ class HideNode extends Node
 
     __onDeactivate()
     {
-        if (!this.show)
+        if (this.hide)
             return;
 
         this.refreshDisplayed();
@@ -92,22 +96,47 @@ Object.defineProperties(HideNode, {
     class HideNode_PChildren extends Node.PChildren
     {
 
-        __onAddChild(childNode, nextNode)
-        {
-            // if (nextNode === null)
-            //     childNode._nextNode = this._nextNode;
+        constructor(node)
+        { super(node);
 
-            if (this.__main.active && this.__main.show)
-                childNode.activate();
         }
 
-        __getNext(childNode)
+        __onAddChild(child_node, next_node)
         {
-            let nextNode = this.findNext(childNode);
-            if (nextNode !== null)
-                return nextNode;
+            // if (next_node === null)
+            //     child_node._nextNode = this._nextNode;
 
-            return this.__main.nextNode;
+            if (this.node.active && !this.node.hide)
+                child_node.activate();
+        }
+
+        __getNext(child_node)
+        {
+            let next_node = this.findNext(child_node);
+            if (next_node !== null)
+                return next_node;
+
+            return this.node.nextNode;
+        }
+
+    }},
+
+});
+
+
+Object.defineProperties(HideNode, {
+
+    PCopyable: { value:
+    class HideNode_PCopyable extends Node.PCopyable {
+
+        constructor(node, args)
+        { super(node, args);
+
+        }
+
+        __createCopy(deepCopy, nodeInstances)
+        {
+            return new HideNode();
         }
 
     }},
