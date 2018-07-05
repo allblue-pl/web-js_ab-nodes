@@ -13,6 +13,12 @@ class TextNode extends Node
         return this._htmlElement.nodeValue;
     }
     set text(value) {
+        if (typeof value === 'string') {
+            let tmpElem =  document.createElement('textarea');
+            tmpElem.innerHTML = value;
+            value = tmpElem.value;
+        }
+
         this._htmlElement.nodeValue = value;
     }
 
