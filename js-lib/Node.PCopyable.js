@@ -33,7 +33,7 @@ class Node_PCopyable {
         this._instanceKeys = [];
 
         this._listeners_OnCreate = [];
-        this._listeners_OnDelete = [];
+        this._listeners_OnDestroy = [];
     }
 
     createCopy(instanceKeys, deepCopy = true)
@@ -137,9 +137,9 @@ class Node_PCopyable {
         this._listeners_OnCreate.push(onCreateListener);
     }
 
-    onDelete(onDeleteListener)
+    onDestroy(onDestroyListener)
     {
-        this._listeners_OnDelete.push(onDeleteListener);
+        this._listeners_OnDestroy.push(onDestroyListener);
     }
 
 
