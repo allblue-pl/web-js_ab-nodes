@@ -22,7 +22,7 @@ class Node_PCopyable {
 
     constructor(node, args)
     {
-        js0.args(arguments, Node, js0.Iterable);
+        js0.args(arguments, Node, null);
 
         this._node = node;
         this.__args = args;
