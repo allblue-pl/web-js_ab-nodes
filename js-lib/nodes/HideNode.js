@@ -18,16 +18,16 @@ class HideNode extends Node
             return;
         this._hide = hideValue;
 
-        this.refreshDisplayed();
-
         if (hideValue) {
             if (this.active) {
                 for (let i = 0; i < this.pChildren.length; i++)
                     this.pChildren.get(i).deactivate();
             }
+            this.refreshDisplayed(true);
         } else {
             for (let i = 0; i < this.pChildren.length; i++)
                 this.pChildren.get(i).activate();
+            this.refreshDisplayed(true);
         }
     }
 
@@ -57,9 +57,9 @@ class HideNode extends Node
         if (this.hide)
             return;
 
-        this.refreshDisplayed();
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).activate();
+        this.refreshDisplayed(true);
     }
 
     __onDeactivate()
@@ -67,7 +67,7 @@ class HideNode extends Node
         if (this.hide)
             return;
 
-        this.refreshDisplayed();
+        this.refreshDisplayed(true);
         for (let i = this.pChildren.length - 1; i >= 0; i--)
             this.pChildren.get(i).deactivate();
     }

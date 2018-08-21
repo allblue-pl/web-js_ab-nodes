@@ -35,16 +35,16 @@ class SingleNode extends Node
         HtmlElement.AddChild(this.parentNode.htmlElement, this._htmlElement,
                 this.nextHtmlElement);
 
-        this.refreshDisplayed();
-        for (let i = 0; i < this.pChildren.length; i++)
-            this.pChildren.get(i).refreshDisplayed(true);
+        // for (let i = 0; i < this.pChildren.length; i++)
+        //     this.pChildren.get(i).refreshDisplayed(true);
+        this.refreshDisplayed(true);
     }
 
     __onDeactivate()
     {
-        this.refreshDisplayed();
-        for (let i = this.pChildren.length - 1; i >= 0; i--)
-            this.pChildren.get(i).refreshDisplayed(true);
+        this.refreshDisplayed(true);
+        // for (let i = this.pChildren.length - 1; i >= 0; i--)
+        //     this.pChildren.get(i).refreshDisplayed(true);
 
         HtmlElement.RemoveChild(this.parentNode.htmlElement, this._htmlElement);
     }

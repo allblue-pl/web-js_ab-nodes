@@ -122,7 +122,7 @@ class Node_PChildren {
 
         for (let i = 0; i < this._children.length; i++) {
             if (this._children[i] === childNode) {
-                childNode.refreshDisplayed();
+                childNode.refreshDisplayed(true);
                 childNode.deactivate();
                 this._children.splice(i, 1);
             }

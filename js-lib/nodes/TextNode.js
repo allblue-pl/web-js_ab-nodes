@@ -41,12 +41,12 @@ class TextNode extends Node
 
         HtmlElement.AddChild(this.parentNode.htmlElement, this._htmlElement,
                 this.nextHtmlElement);
-        this.refreshDisplayed();
+        this.refreshDisplayed(true);
     }
 
     __onDeactivate()
     {
-        this.refreshDisplayed();
+        this.refreshDisplayed(true);
         HtmlElement.RemoveChild(this.parentNode.htmlElement, this._htmlElement);
     }
 

@@ -18,14 +18,14 @@ class ShowNode extends Node
             return;
         this._show = showValue;
 
-        this.refreshDisplayed();
-
         if (showValue) {
             if (this.active) {
                 for (let i = 0; i < this.pChildren.length; i++)
                     this.pChildren.get(i).activate();
             }
+            this.refreshDisplayed(true);
         } else {
+            this.refreshDisplayed(true);
             for (let i = 0; i < this.pChildren.length; i++)
                 this.pChildren.get(i).deactivate();
         }
@@ -57,7 +57,7 @@ class ShowNode extends Node
         if (!this.show)
             return;
 
-        this.refreshDisplayed();
+        this.refreshDisplayed(true);
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).activate();
     }
@@ -67,7 +67,7 @@ class ShowNode extends Node
         if (!this.show)
             return;
 
-        this.refreshDisplayed();
+        this.refreshDisplayed(true);
         for (let i = this.pChildren.length - 1; i >= 0; i--)
             this.pChildren.get(i).deactivate();
     }

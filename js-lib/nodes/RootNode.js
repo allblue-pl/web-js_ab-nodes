@@ -38,14 +38,14 @@ class RootNode extends Node
     {
         HtmlElement.ClearChildren(this._htmlElement);
 
-        this.refreshDisplayed();
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).activate();
+        this.refreshDisplayed(true);
     }
 
     __onDeactivate()
     {
-        this.refreshDisplayed();
+        this.refreshDisplayed(true);
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).deactivate();
     }
