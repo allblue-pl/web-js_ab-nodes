@@ -111,6 +111,20 @@ class Node_PChildren {
         return null;
     }
 
+    findNextHtmlElement(childNode)
+    {
+        let nextHtmlElement = null;
+     
+        let nextNode = this.findNext(childNode);
+        if (nextNode !== null)
+            nextHtmlElement = nextNode.firstHtmlElement;
+
+        if (nextHtmlElement !== null)
+            return nextHtmlElement;
+
+        return this.__getNextHtmlElement();
+    }
+
     get(childNodeIndex)
     {
         return this._children[childNodeIndex];
@@ -132,6 +146,11 @@ class Node_PChildren {
     __getNext(childNode)
     {
         return this.findNext(childNode);
+    }
+
+    __getNextHtmlElement()
+    {
+        return null;
     }
 
     __onAddChild() { js0.virtual(this); }

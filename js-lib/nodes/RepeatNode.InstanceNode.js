@@ -113,6 +113,11 @@ Object.defineProperties(RepeatNode.InstanceNode, {
             return this.node._repeatNode._instances.getAt(instanceIndex + 1);
         }
 
+        __getNextHtmlElement()
+        {
+            return this.node._repeatNode.nextHtmlElement;
+        }
+
     }},
 
 

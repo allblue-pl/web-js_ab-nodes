@@ -81,8 +81,13 @@ class ShowNode extends Node
 
     __getFirstHtmlElement()
     {
-        return this.pChildren.length === 0 ?
-                null : this.pChildren.get(0).firstHtmlElement;
+        for (let i = 0; i < this.pChildren.length; i++) {
+            let childFirstHtmlElement = this.pChildren.get(i).firstHtmlElement;
+            if (childFirstHtmlElement !== null)
+                return childFirstHtmlElement;
+        }
+
+        return null;
     }
     /* / Node */
 
@@ -101,22 +106,27 @@ Object.defineProperties(ShowNode, {
 
         }
 
-        __onAddChild(child_node, next_node)
+        __onAddChild(childNode, nextNode)
         {
-            // if (next_node === null)
-            //     child_node._nextNode = this._nextNode;
+            // if (nextNode === null)
+            //     childNode._nextNode = this._nextNode;
 
             if (this.node.active && this.node.show)
-                child_node.activate();
+                childNode.activate();
         }
 
-        __getNext(child_node)
+        __getNext(childNode)
         {
-            let next_node = this.findNext(child_node);
-            if (next_node !== null)
-                return next_node;
+            let nextNode = this.findNext(childNode);
+            if (nextNode !== null)
+                return nextNode;
 
             return this.node.nextNode;
+            // if (nextNode !== null)
+            //     return nextNode;
+
+            // console.log('Null!');
+            // return null;
         }
 
     }},

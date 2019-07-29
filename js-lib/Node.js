@@ -21,9 +21,22 @@ class Node
                     `does not return \`HTMLElement\`.`);
         }
 
-        // console.log('Test2', firstHtmlElement);
+        if (firstHtmlElement !== null)
+            return firstHtmlElement;
 
-        return firstHtmlElement;
+        if (this.hasParent) {
+            let nextHtmlElement = this.parentNode.pChildren.findNextHtmlElement(this);
+            if (nextHtmlElement === null)
+                return null;
+
+            return nextHtmlElement;
+        }
+
+        return null;;
+    }
+
+    get hasParent() {
+        return this._parentNode !== null;
     }
 
     get htmlElement() {
@@ -37,11 +50,13 @@ class Node
     }
 
     get nextHtmlElement() {
-        return this.nextNode === null ? null : this.nextNode.firstHtmlElement;
+        return this.nextNode === null ? 
+                this.parentNode.pChildren.__getNextHtmlElement() : 
+                this.nextNode.firstHtmlElement;
     }
 
     get nextNode() {
-        return this.parentNode.pChildren.__getNext(this);
+        return this.hasParent ? this.parentNode.pChildren.__getNext(this) : null;
     }
 
     get parentNode() {

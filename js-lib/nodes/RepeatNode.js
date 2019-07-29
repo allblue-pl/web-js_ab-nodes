@@ -100,7 +100,7 @@ class RepeatNode extends Node
         while(this._instances.has(index))
             index++;
 
-        this.set(index);
+        this.add(index);
     }
 
 
