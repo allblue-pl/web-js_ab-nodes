@@ -129,6 +129,11 @@ Object.defineProperties(ShowNode, {
             // return null;
         }
 
+        __getNextHtmlElement()
+        {
+            return this.node.nextHtmlElement;
+        }
+
     }},
 
 });

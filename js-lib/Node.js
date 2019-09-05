@@ -50,9 +50,10 @@ class Node
     }
 
     get nextHtmlElement() {
-        return this.nextNode === null ? 
-                this.parentNode.pChildren.__getNextHtmlElement() : 
-                this.nextNode.firstHtmlElement;
+        if (this.hasParent)
+            return this.parentNode.pChildren.findNextHtmlElement(this)
+
+        return null;
     }
 
     get nextNode() {

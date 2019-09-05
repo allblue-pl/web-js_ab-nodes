@@ -119,6 +119,11 @@ Object.defineProperties(HideNode, {
             return this.node.nextNode;
         }
 
+        __getNextHtmlElement()
+        {
+            this.node.nextHtmlElement;
+        }
+
     }},
 
 });

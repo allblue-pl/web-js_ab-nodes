@@ -170,6 +170,14 @@ Object.defineProperties(RepeatNode, {
             return this.nextNode;
         }
 
+        __getNextHtmlElement()
+        {
+            if (this.node.hasParent)
+                return this.node.parentNode.nextHtmlElement;
+
+            return null;
+        }
+
     }},
 
 
