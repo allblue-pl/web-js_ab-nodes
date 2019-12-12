@@ -116,13 +116,19 @@ class Node_PChildren {
         let nextHtmlElement = null;
      
         let nextNode = this.findNext(childNode);
+        // console.log(this, childNode, this.findNext(childNode));
         if (nextNode !== null)
             nextHtmlElement = nextNode.firstHtmlElement;
 
         if (nextHtmlElement !== null)
             return nextHtmlElement;
 
-        return this.__getNextHtmlElement();
+        nextHtmlElement = this.__getNextHtmlElement();
+
+        if (typeof nextHtmlElement === 'undefined')
+            throw new Error();
+
+        return nextHtmlElement;
     }
 
     get(childNodeIndex)
