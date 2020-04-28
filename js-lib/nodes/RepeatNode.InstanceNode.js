@@ -61,17 +61,6 @@ class RepeatNode_InstanceNode extends Node
         if (this.pChildren.length > 0)
             return this.pChildren.get(0).firstHtmlElement;
 
-        let checking = false;
-        for (let instance of this._repeatNode._instances) {
-            if (instance.key === this.key)
-                checking = true;
-            if (!checking)
-                continue;
-
-            if (instance.pChildren.length > 0)
-                return this.pChildren.get(0).firstHtmlElement;
-        }
-
         return null;
     }
     /* / Node */
@@ -115,6 +104,13 @@ Object.defineProperties(RepeatNode.InstanceNode, {
 
         __getNextHtmlElement()
         {
+            let startIndex = this.node._repeatNode._instances.indexOf(this.node) + 1;
+            for (let i = startIndex; i < this.node._repeatNode._instances.size; i++) {
+                let instance = this.node._repeatNode._instances.getAt(i);
+                if (instance.pChildren.length > 0)
+                    return instance.pChildren.get(0).firstHtmlElement;
+            }
+
             return this.node._repeatNode.nextHtmlElement;
         }
 

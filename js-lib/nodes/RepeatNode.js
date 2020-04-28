@@ -27,11 +27,36 @@ class RepeatNode extends Node
         let instance = new RepeatNode.InstanceNode(this, key);
 
         this._instances.set(key, instance);
-        let original_node = this.pCopyable.getOriginalNode();
+        let node_Original = this.pCopyable.getOriginalNode();
 
         let instanceKeys = this.pCopyable._instanceKeys.concat([ key ]);
-        for (let i = 0; i < original_node.pChildren.length; i++) {
-            let newChildNode = original_node.pChildren.get(i).pCopyable
+        for (let i = 0; i < node_Original.pChildren.length; i++) {
+            let newChildNode = node_Original.pChildren.get(i).pCopyable
+                    .createCopy(instanceKeys);
+            instance.pChildren.add(newChildNode);
+        }
+            
+        if (this.active)
+            instance.activate();
+    }
+
+    addAt(index, key)
+    {
+        if (this._instances.has(key))
+            throw new Error(`Instance with key \`${key}\` already exists.`);
+        if (index < 0)
+            throw new Error(`Index '${index}' cannot be lower than 0.`);
+        if (index > this._instances.size)
+            throw new Error(`Index '${index}' cannot be higher than instances size '${this._instances.size}'.`);
+
+        let instance = new RepeatNode.InstanceNode(this, key);
+
+        this._instances.addAt(index, key, instance);
+        let node_Original = this.pCopyable.getOriginalNode();
+
+        let instanceKeys = this.pCopyable._instanceKeys.concat([ key ]);
+        for (let i = 0; i < node_Original.pChildren.length; i++) {
+            let newChildNode = node_Original.pChildren.get(i).pCopyable
                     .createCopy(instanceKeys);
             instance.pChildren.add(newChildNode);
         }
@@ -48,14 +73,14 @@ class RepeatNode extends Node
         let instance = this._instances.get(key);
         this._instances.delete(key);
 
-        let original_node = this.pCopyable.getOriginalNode();
+        let node_Original = this.pCopyable.getOriginalNode();
         let instanceKeys = this.pCopyable._instanceKeys.concat([ key ]);
-        for (let i = 0; i < original_node.pChildren.length; i++)
-            original_node.pChildren.get(i).pCopyable.deleteCopies(instanceKeys);
+        for (let i = 0; i < node_Original.pChildren.length; i++)
+            node_Original.pChildren.get(i).pCopyable.deleteCopies(instanceKeys);
         //
-        // for (let i = 0; i < original_node.pChildren.length; i++) {
+        // for (let i = 0; i < node_Original.pChildren.length; i++) {
         //
-        //     let newChildNode = original_node.pChildren.get(i).pCopyable.createCopy(
+        //     let newChildNode = node_Original.pChildren.get(i).pCopyable.createCopy(
         //             true, this.pCopyable._instanceKeys.concat([ key ]));
         //     instance.pChildren.add(newChildNode);
         // }

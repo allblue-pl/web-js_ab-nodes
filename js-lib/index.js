@@ -1,43 +1,55 @@
 'use strict';
 
-const HideNode = require('./nodes/HideNode');
-const Node = require('./Node');
-const RepeatNode = require('./nodes/RepeatNode');
-const RootNode = require('./nodes/RootNode');
-const ShowNode = require('./nodes/ShowNode');
-const SingleNode = require('./nodes/SingleNode');
-const TextNode = require('./nodes/TextNode');
-
+const
+    js0 = require('js0')
+;
 
 class abNodes_Class
 {
 
     get HideNode() {
-        return HideNode;
+        return require('./nodes/HideNode');
     }
 
     get Node() {
-        return Node;
+        return require('./Node');
     }
 
     get RepeatNode() {
-        return RepeatNode;
+        return require('./nodes/RepeatNode');
     }
 
     get RootNode() {
-        return RootNode;
+        return require('./nodes/RootNode');
     }
 
     get ShowNode() {
-        return ShowNode;
+        return require('./nodes/ShowNode');
     }
 
     get SingleNode() {
-        return SingleNode;
+        return require('./nodes/SingleNode');
     }
 
     get TextNode() {
-        return TextNode;
+        return require('./nodes/TextNode');
+    }
+
+
+    get debug() {
+        return this._debug;
+    }
+    
+
+    constructor() {
+        this._debug = false;
+    }
+
+    setDebug(debug)
+    {
+        js0.args(arguments, 'boolean');
+
+        this._debug = debug;
     }
 
 };

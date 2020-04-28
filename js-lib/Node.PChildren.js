@@ -43,6 +43,22 @@ class Node_PChildren {
         this.__onAddChild(childNode);
     }
 
+    // addAt(index, childNode)
+    // {
+    //     js0.args(arguments, 'number', Node);
+
+    //     if (index < 0)
+    //         throw new Error(`Index '${index}' cannot be lower than 0.`);
+    //     if (index > this._children.length)
+    //         throw new Error(`Index '${index}' cannot be higher than children size '${this._children.length}'.`);
+        
+    //     childNode._parentNode = this._node;
+
+    //     this._children.splice(index, 0, childNode);
+
+    //     this.__onAddChild(childNode);
+    // }
+
     createCopy(topNodeCopy, instanceKeys)
     {
         js0.args(arguments, Node, Array);
@@ -116,7 +132,6 @@ class Node_PChildren {
         let nextHtmlElement = null;
      
         let nextNode = this.findNext(childNode);
-        // console.log(this, childNode, this.findNext(childNode));
         if (nextNode !== null)
             nextHtmlElement = nextNode.firstHtmlElement;
 

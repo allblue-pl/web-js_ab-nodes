@@ -68,6 +68,8 @@ class Node_PCopyable {
             if (!this._copies[i].pCopyable.matchInstanceKeys(instanceKeys, false))
                 continue;
 
+            for (let listener_OnDestroy of this._listeners_OnDestroy)
+                listener_OnDestroy(this._copies[i], instanceKeys);
             this._copies.splice(i, 1);
         }
 

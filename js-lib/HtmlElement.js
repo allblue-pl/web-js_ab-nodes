@@ -1,15 +1,24 @@
 'use strict';
 
+const
+    abNodes = require('.')
+;
+
 
 class HtmlElement
 {
 
     static AddChild(parentHtmlElement, htmlElement, nextHtmlElement = null)
     {
-        if (nextHtmlElement === null)
-            parentHtmlElement.appendChild(htmlElement);
-        else
-            parentHtmlElement.insertBefore(htmlElement, nextHtmlElement);
+        try {
+            if (nextHtmlElement === null)
+                parentHtmlElement.appendChild(htmlElement);
+            else
+                parentHtmlElement.insertBefore(htmlElement, nextHtmlElement);
+        } catch (e) {
+            if (abNodes.debug)
+                console.warn(e);
+        }
     }
 
     static ClearChildren(htmlElement)
@@ -20,7 +29,12 @@ class HtmlElement
 
     static RemoveChild(parentHtmlElement, htmlElement)
     {
-        parentHtmlElement.removeChild(htmlElement);
+        try {
+            parentHtmlElement.removeChild(htmlElement);
+        } catch (e) {
+            if (abNodes.debug)
+                console.warn(e);
+        }
     }
 
 }
