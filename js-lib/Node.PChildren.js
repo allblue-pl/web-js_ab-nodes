@@ -140,11 +140,46 @@ class Node_PChildren {
 
         nextHtmlElement = this.__getNextHtmlElement();
 
-        if (typeof nextHtmlElement === 'undefined')
-            throw new Error();
+        // js0.assert(typeof nextHtmlElement !== 'undefined', '???');
+        // if (typeof nextHtmlElement === 'undefined')
+        //     throw new Error();
 
         return nextHtmlElement;
     }
+
+    // findNextHtmlElement(childNode)
+    // {
+    //     let nextHtmlElement = null;
+     
+    //     let startIndex = null;
+    //     for (let i = 0; i < this._children.length; i++) {
+    //         if (this._children[i] === childNode) {
+    //             startIndex = i + 1;
+    //             break;
+    //         }
+    //     }
+
+    //     if (startIndex === null)
+    //         throw new Error(`Node '${childNode}' is not a child of '${this._node}'.`);
+
+    //     for (let i = startIndex; i < this._children.length; i++) {
+    //         let nextNode = this._children[i];
+    //         let nextHtmlElement = nextNode.__getFirstHtmlElement();
+    //         if (!js0.type(nextHtmlElement, [ HTMLElement, Text, js0.Null ])) {
+    //             throw new Error(`\`__getFirstHtmlElement\` in \`${this.constructor.name}\`` +
+    //                     `does not return \`HTMLElement\`.`);
+    //         }
+
+    //         if (nextHtmlElement !== null)
+    //             return nextHtmlElement;
+            
+    //             nextHtmlElement = this.__getNextHtmlElement();
+    //         if (nextHtmlElement !== null)
+    //             return nextHtmlElement;
+    //     }
+
+    //     return null;
+    // }
 
     get(childNodeIndex)
     {
