@@ -55,12 +55,14 @@ class RepeatNode extends Node
         let node_Original = this.pCopyable.getOriginalNode();
 
         let instanceKeys = this.pCopyable._instanceKeys.concat([ key ]);
+
         for (let i = 0; i < node_Original.pChildren.length; i++) {
             let newChildNode = node_Original.pChildren.get(i).pCopyable
                     .createCopy(instanceKeys);
+
             instance.pChildren.add(newChildNode);
         }
-            
+
         if (this.active)
             instance.activate();
     }

@@ -103,7 +103,7 @@ Object.defineProperties(RepeatNode.InstanceNode, {
         }
 
         __getNextHtmlElement()
-        {
+        {   
             let startIndex = this.node._repeatNode._instances.indexOf(this.node) + 1;
             for (let i = startIndex; i < this.node._repeatNode._instances.size; i++) {
                 let instance = this.node._repeatNode._instances.getAt(i);

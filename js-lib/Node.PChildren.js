@@ -73,6 +73,7 @@ class Node_PChildren {
             for (let i = 0; i < children.length; i++) {
                 let childNodeCopy = children.get(i).pCopyable
                         .createCopy(instanceKeys, false);
+
                 nodeCopy.pChildren.add(childNodeCopy);
 
                 if (!js0.type(childNodeCopy, js0.Prop(Node.PChildren)))
@@ -130,7 +131,7 @@ class Node_PChildren {
     findNextHtmlElement(childNode)
     {
         let nextHtmlElement = null;
-     
+    
         let nextNode = this.findNext(childNode);
         if (nextNode !== null)
             nextHtmlElement = nextNode.firstHtmlElement;
