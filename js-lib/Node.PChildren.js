@@ -132,6 +132,8 @@ class Node_PChildren {
     {
         let nextHtmlElement = null;
     
+        // console.log('Test', this.node, childNode)
+
         let nextNode = this.findNext(childNode);
         if (nextNode !== null)
             nextHtmlElement = nextNode.firstHtmlElement;

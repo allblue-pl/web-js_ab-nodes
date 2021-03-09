@@ -28,6 +28,7 @@ class Node_PCopyable {
         this.__args = args;
 
         this._copies = [];
+        this._copies_ByInstanceKeys = {};
 
         this._source = null;
         this._instanceKeys = [];
@@ -51,7 +52,8 @@ class Node_PCopyable {
         if (deepCopy && js0.type(this.node, js0.Prop(Node.PChildren)))
             this.node.pChildren.createCopy(nodeCopy, instanceKeys);
 
-        this._copies.push(nodeCopy);
+        this._copies_Add(instanceKeys, nodeCopy);
+        // this._copies.push(nodeCopy);
 
         for (let listener of this._listeners_OnCreate)
             listener(nodeCopy, instanceKeys);
@@ -64,13 +66,19 @@ class Node_PCopyable {
         js0.args(arguments, Array, [ 'boolean', js0.Default ]);
         js0.assert(this._source === null, 'Cannot create copy of a copy.');
 
-        for (let i = this._copies.length - 1; i >= 0; i--) {
-            if (!this._copies[i].pCopyable.matchInstanceKeys(instanceKeys, false))
-                continue;
+        let nodeCopies = this._copies_Get(instanceKeys, true);
+        for (let nodeCopy of nodeCopies) {
+            for (let i = this._copies.length - 1; i >= 0; i--) {
+                if (this._copies[i] !== nodeCopy)
+                    continue;
 
-            for (let listener_OnDestroy of this._listeners_OnDestroy)
-                listener_OnDestroy(this._copies[i], instanceKeys);
-            this._copies.splice(i, 1);
+                for (let listener_OnDestroy of this._listeners_OnDestroy)
+                    listener_OnDestroy(nodeCopy, instanceKeys);
+
+                this._copies.splice(i, 1);
+
+                break;
+            }    
         }
 
         if (deepDelete && js0.type(this.node, js0.Prop(Node.PChildren)))
@@ -91,13 +99,15 @@ class Node_PCopyable {
 
         // console.log('QQQ', this._copies.length);
 
-        let nodeCopies = [];
-        for (let nodeCopy of this._copies) {
-            // console.log('WTF?');
-            // console.log('Bam', instanceKeys, nodeCopy.pCopyable._instanceKeys);
-            if (nodeCopy.pCopyable.matchInstanceKeys(instanceKeys))
-                nodeCopies.push(nodeCopy);
-        }
+        return this._copies_Get(instanceKeys);
+
+        // let nodeCopies = [];
+        // for (let nodeCopy of this._copies) {
+        //     // console.log('WTF?');
+        //     // console.log('Bam', instanceKeys, nodeCopy.pCopyable._instanceKeys);
+        //     if (nodeCopy.pCopyable.matchInstanceKeys(instanceKeys))
+        //         nodeCopies.push(nodeCopy);
+        // }
 
         return nodeCopies;
     }
@@ -144,6 +154,51 @@ class Node_PCopyable {
         this._listeners_OnDestroy.push(onDestroyListener);
     }
 
+
+    _copies_Add(instanceKeys, nodeCopy)
+    {
+        let copies_Root = this._copies_GetRoot(instanceKeys, true);
+
+        if (!('_$nodes' in copies_Root))
+            copies_Root._$nodes = [];
+
+        copies_Root._$nodes.push(nodeCopy);
+        this._copies.push(nodeCopy);
+    }
+
+    _copies_Get(instanceKeys, remove = false)
+    {
+        let copies_Root = this._copies_GetRoot(instanceKeys, false);
+        if (copies_Root === null)
+            return [];
+
+        if (!('_$nodes' in copies_Root))
+            return [];
+
+        if (remove) {
+            let nodeCopies = copies_Root._$nodes;
+            copies_Root._$nodes = [];
+            return nodeCopies;
+        } else
+            return copies_Root._$nodes.slice();
+    }
+
+    _copies_GetRoot(instanceKeys, create)
+    {
+        let copies_Current = this._copies_ByInstanceKeys;
+        for (let i = 0; i < instanceKeys.length; i++) {
+            if (!(instanceKeys[i] in copies_Current)) {
+                if (create)
+                    copies_Current[instanceKeys[i]] = {};
+                else
+                    return null;
+            }
+
+            copies_Current = copies_Current[instanceKeys[i]];
+        }
+
+        return copies_Current;
+    }
 
     __addInstance(key, instanceNode)
     {
