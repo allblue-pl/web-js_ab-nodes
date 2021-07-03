@@ -18,11 +18,12 @@ class ShowNode extends Node
             return;
         this._show = showValue;
 
+        if (!this.active)
+            return;
+
         if (showValue) {
-            if (this.active) {
-                for (let i = 0; i < this.pChildren.length; i++)
-                    this.pChildren.get(i).activate();
-            }
+            for (let i = 0; i < this.pChildren.length; i++)
+                this.pChildren.get(i).activate();
             this.refreshDisplayed(true);
         } else {
             this.refreshDisplayed(true);

@@ -61,8 +61,8 @@ class Node
     }
 
     get parentNode() {
-        if (this._parentNode === null)
-            throw new Error('Parent node not set.');
+        // if (this._parentNode === null)
+        //     throw new Error('Parent node not set.');
 
         return this._parentNode;
     }

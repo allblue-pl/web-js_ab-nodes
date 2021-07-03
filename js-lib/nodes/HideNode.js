@@ -18,11 +18,12 @@ class HideNode extends Node
             return;
         this._hide = hideValue;
 
+        if (!this.active)
+            return;
+
         if (hideValue) {
-            if (this.active) {
-                for (let i = 0; i < this.pChildren.length; i++)
-                    this.pChildren.get(i).deactivate();
-            }
+            for (let i = 0; i < this.pChildren.length; i++)
+                this.pChildren.get(i).deactivate();
             this.refreshDisplayed(true);
         } else {
             for (let i = 0; i < this.pChildren.length; i++)
