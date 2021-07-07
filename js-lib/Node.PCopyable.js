@@ -157,7 +157,8 @@ class Node_PCopyable {
 
     _copies_Add(instanceKeys, nodeCopy)
     {
-        let copies_Root = this._copies_GetRoot(instanceKeys, true);
+        let copies_Root = this._copies_GetRoot(this._copies_ByInstanceKeys,
+                instanceKeys, true);
 
         if (!('_$nodes' in copies_Root))
             copies_Root._$nodes = [];
@@ -168,7 +169,8 @@ class Node_PCopyable {
 
     _copies_Get(instanceKeys, remove = false)
     {
-        let copies_Root = this._copies_GetRoot(instanceKeys, false);
+        let copies_Root = this._copies_GetRoot(this._copies_ByInstanceKeys,
+                instanceKeys, false);
         if (copies_Root === null)
             return [];
 
@@ -183,10 +185,27 @@ class Node_PCopyable {
             return copies_Root._$nodes.slice();
     }
 
-    _copies_GetRoot(instanceKeys, create)
+    _copies_GetRoot(copies_Current, instanceKeys, create)
     {
-        let copies_Current = this._copies_ByInstanceKeys;
         for (let i = 0; i < instanceKeys.length; i++) {
+            if (instanceKeys[i] === null) {
+                let copies = {
+                    _$nodes: [],
+                };
+
+                for (let instanceKey_T in copies_Current) {
+                    let copies_New = this._copies_GetRoot(copies_Current[instanceKey_T],
+                            instanceKeys.slice(1), create);
+                    if (copies_New !== null) {
+                        if ('_$nodes' in copies_New) {
+                            copies._$nodes = copies._$nodes.concat(copies_New._$nodes);
+                        }
+                    }
+                }
+
+                return copies;
+            }
+            
             if (!(instanceKeys[i] in copies_Current)) {
                 if (create)
                     copies_Current[instanceKeys[i]] = {};
@@ -199,6 +218,24 @@ class Node_PCopyable {
 
         return copies_Current;
     }
+
+    // _copies_GetRoot(instanceKeys, create)
+    // {
+    //     let copies_Current = this._copies_ByInstanceKeys;
+
+    //     for (let i = 0; i < instanceKeys.length; i++) {
+    //         if (!(instanceKeys[i] in copies_Current)) {
+    //             if (create)
+    //                 copies_Current[instanceKeys[i]] = {};
+    //             else
+    //                 return null;
+    //         }
+
+    //         copies_Current = copies_Current[instanceKeys[i]];
+    //     }
+
+    //     return copies_Current;
+    // }
 
     __addInstance(key, instanceNode)
     {
