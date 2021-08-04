@@ -109,7 +109,7 @@ class Node_PCopyable {
         //         nodeCopies.push(nodeCopy);
         // }
 
-        return nodeCopies;
+        // return nodeCopies;
     }
 
     getOriginalNode()
