@@ -17,7 +17,7 @@ class RepeatNode_InstanceNode extends Node
 
     constructor(repeatNode, key)
     { super();
-        js0.args(arguments, RepeatNode);
+        js0.args(arguments, RepeatNode, [ 'number', 'string' ]);
         js0.prop(this, RepeatNode.InstanceNode.PChildren, this);
         // js0.prop(this, RepeatNode.InstanceNode.PCopyable, this);
 
