@@ -192,13 +192,19 @@ class Node_PCopyable {
                 let copies = {
                     _$nodes: [],
                 };
+                // if ('_$nodes' in copies_Current)
+                //     copies._$nodes = copies._$nodes.concat(copies_Current._$nodes);
 
                 for (let instanceKey_T in copies_Current) {
+                    if (instanceKey_T === '_$nodes')
+                        continue;
+
                     let copies_New = this._copies_GetRoot(copies_Current[instanceKey_T],
-                            instanceKeys.slice(1), create);
+                            instanceKeys.slice(i + 1), create);
                     if (copies_New !== null) {
                         if ('_$nodes' in copies_New) {
-                            copies._$nodes = copies._$nodes.concat(copies_New._$nodes);
+                            copies._$nodes = copies._$nodes.concat(
+                                    copies_New._$nodes);
                         }
                     }
                 }
