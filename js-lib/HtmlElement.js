@@ -8,8 +8,7 @@ const
 class HtmlElement
 {
 
-    static AddChild(parentHtmlElement, htmlElement, nextHtmlElement = null)
-    {
+    static AddChild(parentHtmlElement, htmlElement, nextHtmlElement = null) {
         try {
             if (nextHtmlElement === null)
                 parentHtmlElement.appendChild(htmlElement);
@@ -21,14 +20,12 @@ class HtmlElement
         }
     }
 
-    static ClearChildren(htmlElement)
-    {
+    static ClearChildren(htmlElement) {
         while (htmlElement.firstChild)
             htmlElement.removeChild(htmlElement.firstChild);
     }
 
-    static RemoveChild(parentHtmlElement, htmlElement)
-    {
+    static RemoveChild(parentHtmlElement, htmlElement) {
         try {
             parentHtmlElement.removeChild(htmlElement);
         } catch (e) {

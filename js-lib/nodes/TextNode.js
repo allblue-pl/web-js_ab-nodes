@@ -17,8 +17,7 @@ class TextNode extends Node
     }
 
 
-    constructor(text)
-    { super();
+    constructor(text) { super();
         js0.prop(this, TextNode.PCopyable, this, arguments);
 
         this._text = text;
@@ -27,16 +26,14 @@ class TextNode extends Node
 
 
     /* Node */
-    __isDisplayed()
-    {
+    __isDisplayed() {
         if (!this.active)
             return false;
 
         return this.parentNode.displayed;
     }
 
-    __onActivate()
-    {
+    __onActivate() {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         HtmlElement.AddChild(this.parentNode.htmlElement, this._htmlElement,
@@ -44,19 +41,16 @@ class TextNode extends Node
         this.refreshDisplayed(true);
     }
 
-    __onDeactivate()
-    {
+    __onDeactivate() {
         this.refreshDisplayed(true);
         HtmlElement.RemoveChild(this.parentNode.htmlElement, this._htmlElement);
     }
 
-    __getHtmlElement()
-    {
+    __getHtmlElement() {
         return this._htmlElement;
     }
 
-    __getFirstHtmlElement()
-    {
+    __getFirstHtmlElement() {
         if (!this.active)
             return null;
 
@@ -71,16 +65,18 @@ module.exports = TextNode;
 Object.defineProperties(TextNode, {
 
     PCopyable: { value:
-    class TextNode_PCopyable extends Node.PCopyable
-    {
+    class TextNode_PCopyable extends Node.PCopyable {
 
-        constructor(node, args)
-        {
+        constructor(node, args) {
             super(node, args);
         }
 
         __createCopy() {
             return new TextNode(this.__args[0]);
+        }
+
+        __deleteCopy(instanceKeys) {
+            
         }
 
     }},

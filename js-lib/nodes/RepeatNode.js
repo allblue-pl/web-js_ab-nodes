@@ -1,26 +1,20 @@
 'use strict';
 
 const js0 = require('js0');
-
-const HtmlElement = require('../HtmlElement');
 const Node = require('../Node');
-
-const TextNode = require('./TextNode');
 
 
 class RepeatNode extends Node
 {
 
-    constructor()
-    { super();
+    constructor() { super();
         js0.prop(this, RepeatNode.PChildren, this);
         js0.prop(this, RepeatNode.PCopyable, this, arguments);
 
         this._instances = new js0.List();
     }
 
-    add(key)
-    {
+    add(key) {
         if (this._instances.has(key))
             throw new Error(`Instance with key \`${key}\` already exists.`);
 
@@ -40,8 +34,7 @@ class RepeatNode extends Node
             instance.activate();
     }
 
-    addAt(index, key)
-    {
+    addAt(index, key) {
         if (this._instances.has(key))
             throw new Error(`Instance with key \`${key}\` already exists.`);
         if (index < 0)
@@ -67,8 +60,7 @@ class RepeatNode extends Node
             instance.activate();
     }
 
-    delete(key)
-    {
+    delete(key) {
         if (!this._instances.has(key))
             throw new Error(`Instance with key \`${key}\ does not exist.`);
 
@@ -79,6 +71,7 @@ class RepeatNode extends Node
         let instanceKeys = this.pCopyable._instanceKeys.concat([ key ]);
         for (let i = 0; i < node_Original.pChildren.length; i++)
             node_Original.pChildren.get(i).pCopyable.deleteCopies(instanceKeys);
+        
         //
         // for (let i = 0; i < node_Original.pChildren.length; i++) {
         //
@@ -91,8 +84,7 @@ class RepeatNode extends Node
             instance.deactivate();
     }
 
-    getInstanceNodeCopies(sourceNode, key)
-    {
+    getInstanceNodeCopies(sourceNode, key) {
         js0.args(arguments, Node, [ 'string', 'number' ]);
 
         if (!this._instances.has(key))
@@ -109,8 +101,7 @@ class RepeatNode extends Node
         return nodeCopies;
     }
 
-    pop()
-    {
+    pop() {
         if (this._instances.size <= 0)
             throw new Error('Cannot `pop` on empty `RepeatNode`.');
 
@@ -121,8 +112,7 @@ class RepeatNode extends Node
             lastInstance.deactivate();
     }
 
-    push()
-    {
+    push() {
         let index = 0;
         while(this._instances.has(index))
             index++;
@@ -132,37 +122,32 @@ class RepeatNode extends Node
 
 
     /* Node */
-    __isDisplayed()
-    {
+    __isDisplayed() {
         if (!this.active)
             return false;
 
         return this.parentNode.displayed;
     }
 
-    __onActivate()
-    {
+    __onActivate() {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         for (let i = 0; i < this._instances.size; i++)
             this._instances.getAt(i).activate();
     }
 
-    __onDeactivate()
-    {
+    __onDeactivate() {
         for (let i = this._instances.size - 1; i >= 0; i--)
             this._instances.getAt(i).deactivate();
     }
 
-    __getHtmlElement()
-    {
+    __getHtmlElement() {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         return this.parentNode.htmlElement;
     }
 
-    __getFirstHtmlElement()
-    {
+    __getFirstHtmlElement() {
         return this._instances.size === 0 ?
                 null : this._instances.getAt(0).firstHtmlElement;
     }
@@ -177,19 +162,16 @@ Object.defineProperties(RepeatNode, {
     PChildren: { value:
     class extends Node.PChildren {
 
-        constructor(node)
-        {
+        constructor(node) {
             super(node);
         }
 
-        __onAddChild(childNode, nextNode)
-        {
+        __onAddChild(childNode, nextNode) {
             js0.typeE(childNode, js0.Prop(Node.PCopyable));
             // js0.args(arguments, js0.Prop(Node.PCopyable), Node);
         }
 
-        __getNext(childNode)
-        {
+        __getNext(childNode) {
             let nextNode = this.findNext(childNode);
             if (nextNode !== null)
                 return nextNode;
@@ -197,8 +179,7 @@ Object.defineProperties(RepeatNode, {
             return this.nextNode;
         }
 
-        __getNextHtmlElement()
-        {
+        __getNextHtmlElement() {
             if (this.node.hasParent)
                 return this.node.parentNode.nextHtmlElement;
 
@@ -209,12 +190,15 @@ Object.defineProperties(RepeatNode, {
 
 
     PCopyable: { value:
-    class RepeatNode_PCopyable extends Node.PCopyable
-    {
+    class RepeatNode_PCopyable extends Node.PCopyable {
 
-        __createCopy(nodeInstance)
-        {
+        __createCopy(nodeInstance) {
             return new RepeatNode();
+        }
+
+        __deleteCopy(instanceKeys) {
+           for (let i = this.node._instances.size - 1; i >= 0; i--)
+                this.node.delete(this.node._instances.getKeyAt(i));
         }
 
     }},

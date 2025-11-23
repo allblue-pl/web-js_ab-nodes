@@ -9,8 +9,7 @@ const Node = require('../Node');
 class RootNode extends Node
 {
 
-    constructor(htmlElement)
-    { super();
+    constructor(htmlElement) { super();
         js0.args(arguments, HTMLElement);
         js0.prop(this, RootNode.PChildren, this);
 
@@ -19,23 +18,19 @@ class RootNode extends Node
 
 
     /* Node.IListener */
-    __getHtmlElement()
-    {
+    __getHtmlElement() {
         return this._htmlElement;
     }
 
-    __getFirstHtmlElement()
-    {
+    __getFirstHtmlElement() {
         return this._htmlElement;
     }
 
-    __isDisplayed()
-    {
+    __isDisplayed() {
         return this.active;
     }
 
-    __onActivate()
-    {
+    __onActivate() {
         HtmlElement.ClearChildren(this._htmlElement);
 
         for (let i = 0; i < this.pChildren.length; i++)
@@ -43,8 +38,7 @@ class RootNode extends Node
         this.refreshDisplayed(true);
     }
 
-    __onDeactivate()
-    {
+    __onDeactivate() {
         this.refreshDisplayed(true);
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).deactivate();
@@ -58,16 +52,13 @@ module.exports = RootNode;
 Object.defineProperties(RootNode, {
 
     PChildren: { value:
-    class RootNode_PChildren extends Node.PChildren
-    {
+    class RootNode_PChildren extends Node.PChildren {
 
-        constructor(node)
-        {
+        constructor(node) {
             super(node);
         }
 
-        __onAddChild(childNode)
-        {
+        __onAddChild(childNode) {
             if (this.node.active)
                 childNode.activate();
         }

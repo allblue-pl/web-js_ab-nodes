@@ -7,8 +7,7 @@ const js0 = require('js0');
 export default class VirtualNode extends abNodes.Node
 {
 
-    constructor()
-    { super();
+    constructor() { super();
         js0.prop(this, VirtualNode.PChildren, this);
 
         // this._idNodes = {};
@@ -23,34 +22,29 @@ export default class VirtualNode extends abNodes.Node
 
 
     /* Node */
-    __isDisplayed()
-    {
+    __isDisplayed() {
         return this.parentNode.displayed && this.active;
     }
 
-    __onActivate()
-    {
+    __onActivate() {
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).activate();
         this.refreshDisplayed(true);
     }
 
-    __onDeactivate()
-    {
+    __onDeactivate() {
         this.refreshDisplayed(true);
         for (let i = this.pChildren.length - 1; i >= 0; i--)
             this.pChildren.get(i).deactivate();
     }
 
-    __getHtmlElement()
-    {
+    __getHtmlElement() {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         return this.parentNode.htmlElement;
     }
 
-    __getFirstHtmlElement()
-    {
+    __getFirstHtmlElement() {
         return this.pChildren.length === 0 ?
                 null : this.pChildren.get(0).firstHtmlElement;
     }
@@ -62,16 +56,13 @@ export default class VirtualNode extends abNodes.Node
 Object.defineProperties(VirtualNode, {
 
     PChildren: { value:
-    class VirtualNode_PChildren extends abNodes.Node.PChildren
-    {
+    class VirtualNode_PChildren extends abNodes.Node.PChildren {
 
-        constructor(node)
-        {
+        constructor(node) {
             super(node);
         }
         
-        __onAddChild(childNode, next_node)
-        {
+        __onAddChild(childNode, next_node) {
             if (next_node === null)
                 childNode._nextNode = this._nextNode;
 
@@ -79,8 +70,7 @@ Object.defineProperties(VirtualNode, {
                 childNode.activate();
         }
 
-        __getNext(childNode)
-        {
+        __getNext(childNode) {
             let next_node = this.findNext(childNode);
             if (next_node !== null)
                 return next_node;

@@ -45,8 +45,7 @@ class abNodes_Class
         this._debug = false;
     }
 
-    setDebug(debug)
-    {
+    setDebug(debug) {
         js0.args(arguments, 'boolean');
 
         this._debug = debug;

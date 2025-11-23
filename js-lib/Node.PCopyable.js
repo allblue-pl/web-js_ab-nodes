@@ -20,8 +20,7 @@ class Node_PCopyable {
     }
 
 
-    constructor(node, args)
-    {
+    constructor(node, args) {
         js0.args(arguments, Node, null);
 
         this._node = node;
@@ -37,8 +36,7 @@ class Node_PCopyable {
         this._listeners_OnDestroy = [];
     }
 
-    createCopy(instanceKeys, deepCopy = true)
-    {
+    createCopy(instanceKeys, deepCopy = true) {
         js0.args(arguments, Array, [ 'boolean', js0.Default ]);
         js0.assert(this._source === null, 'Cannot create copy of a copy.');
 
@@ -61,8 +59,7 @@ class Node_PCopyable {
         return nodeCopy;
     }
 
-    deleteCopies(instanceKeys, deepDelete = true)
-    {
+    deleteCopies(instanceKeys, deepDelete = true) {
         js0.args(arguments, Array, [ 'boolean', js0.Default ]);
         js0.assert(this._source === null, 'Cannot create copy of a copy.');
 
@@ -71,6 +68,8 @@ class Node_PCopyable {
             for (let i = this._copies.length - 1; i >= 0; i--) {
                 if (this._copies[i] !== nodeCopy)
                     continue;
+
+                nodeCopy.pCopyable.__deleteCopy(instanceKeys);
 
                 for (let listener_OnDestroy of this._listeners_OnDestroy)
                     listener_OnDestroy(nodeCopy, instanceKeys);
@@ -85,19 +84,15 @@ class Node_PCopyable {
             this.node.pChildren.deleteCopies(this.node, instanceKeys);
     }
 
-    getInstanceKeys()
-    {
+    getInstanceKeys() {
         return this._instanceKeys.slice();
     }
 
-    getNodeCopies(instanceKeys = null)
-    {
-        js0.args(arguments, [ Array, js0.Default ]);
+    getNodeCopies(instanceKeys = null) {
+        js0.args(arguments, [ Array, js0.Default, js0.Null ]);
 
         if (instanceKeys === null)
             return this._copies.slice();
-
-        // console.log('QQQ', this._copies.length);
 
         return this._copies_Get(instanceKeys);
 
@@ -112,8 +107,7 @@ class Node_PCopyable {
         // return nodeCopies;
     }
 
-    getOriginalNode()
-    {
+    getOriginalNode() {
         let sourceNode = this.node;
         while (sourceNode.pCopyable._source !== null)
             sourceNode = this._source;
@@ -121,8 +115,7 @@ class Node_PCopyable {
         return sourceNode;
     }
 
-    matchInstanceKeys(instanceKeys, exact = true)
-    {
+    matchInstanceKeys(instanceKeys, exact = true) {
         js0.args(arguments, Array);
 
         if (this._source === null)
@@ -144,19 +137,16 @@ class Node_PCopyable {
         return true;
     }
 
-    onCreate(onCreateListener)
-    {
+    onCreate(onCreateListener) {
         this._listeners_OnCreate.push(onCreateListener);
     }
 
-    onDestroy(onDestroyListener)
-    {
+    onDestroy(onDestroyListener) {
         this._listeners_OnDestroy.push(onDestroyListener);
     }
 
 
-    _copies_Add(instanceKeys, nodeCopy)
-    {
+    _copies_Add(instanceKeys, nodeCopy) {
         let copies_Root = this._copies_GetRoot(this._copies_ByInstanceKeys,
                 instanceKeys, true);
 
@@ -167,8 +157,7 @@ class Node_PCopyable {
         this._copies.push(nodeCopy);
     }
 
-    _copies_Get(instanceKeys, remove = false)
-    {
+    _copies_Get(instanceKeys, remove = false) {
         let copies_Root = this._copies_GetRoot(this._copies_ByInstanceKeys,
                 instanceKeys, false);
         if (copies_Root === null)
@@ -185,15 +174,14 @@ class Node_PCopyable {
             return copies_Root._$nodes.slice();
     }
 
-    _copies_GetRoot(copies_Current, instanceKeys, create)
-    {
+    _copies_GetRoot(copies_Current, instanceKeys, create) {
         for (let i = 0; i < instanceKeys.length; i++) {
             if (instanceKeys[i] === null) {
                 let copies = {
                     _$nodes: [],
                 };
-                // if ('_$nodes' in copies_Current)
-                //     copies._$nodes = copies._$nodes.concat(copies_Current._$nodes);
+                if ('_$nodes' in copies_Current)
+                    copies._$nodes = copies._$nodes.concat(copies_Current._$nodes);
 
                 for (let instanceKey_T in copies_Current) {
                     if (instanceKey_T === '_$nodes')
@@ -243,8 +231,7 @@ class Node_PCopyable {
     //     return copies_Current;
     // }
 
-    __addInstance(key, instanceNode)
-    {
+    __addInstance(key, instanceNode) {
         js0.args(arguments, [ 'string', 'number' ],
                 require('./nodes/RepeatNode').InstanceNode);
 
@@ -264,6 +251,7 @@ class Node_PCopyable {
     // }
 
     __createCopy(instanceKeys) { js0.virtual(this); }
+    __deleteCopy(instanceKeys) { js0.virtual(this); }
 
 }});
 module.exports = Node.PCopyable;

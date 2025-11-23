@@ -19,16 +19,14 @@ class Node_PChildren {
     }
 
 
-    constructor(node)
-    {
+    constructor(node) {
         js0.args(arguments, Node);
 
         this._node = node;
         this._children = [];
     }
 
-    add(childNode, nextNode = null)
-    {
+    add(childNode, nextNode = null) {
         js0.args(arguments, Node, [ Node, js0.Default ]);
 
         let insertIndex = nextNode === null ?
@@ -59,8 +57,7 @@ class Node_PChildren {
     //     this.__onAddChild(childNode);
     // }
 
-    createCopy(topNodeCopy, instanceKeys)
-    {
+    createCopy(topNodeCopy, instanceKeys) {
         js0.args(arguments, Node, Array);
         js0.typeE(this._node, js0.Prop(Node.PCopyable));
 
@@ -89,8 +86,7 @@ class Node_PChildren {
         }
     }
 
-    deleteCopies(topOriginalNode, instanceKeys)
-    {
+    deleteCopies(topOriginalNode, instanceKeys) {
         js0.args(arguments, Node, Array);
 
         let originalNodesStack = [ topOriginalNode ];
@@ -117,8 +113,7 @@ class Node_PChildren {
         return topOriginalNode;
     }
 
-    findNext(childNode)
-    {
+    findNext(childNode) {
         let childNodeIndex = this._children.indexOf(childNode);
         js0.assert(childNodeIndex !== -1, '`childNode` not found.');
 
@@ -128,8 +123,7 @@ class Node_PChildren {
         return null;
     }
 
-    findNextHtmlElement(childNode)
-    {
+    findNextHtmlElement(childNode) {
         let nextHtmlElement = null;
     
         // console.log('Test', this.node, childNode)
@@ -184,13 +178,11 @@ class Node_PChildren {
     //     return null;
     // }
 
-    get(childNodeIndex)
-    {
+    get(childNodeIndex) {
         return this._children[childNodeIndex];
     }
 
-    remove(childNode)
-    {
+    remove(childNode) {
         js0.args(arguments, Node);
 
         for (let i = 0; i < this._children.length; i++) {
@@ -202,13 +194,11 @@ class Node_PChildren {
         }
     }
 
-    __getNext(childNode)
-    {
+    __getNext(childNode) {
         return this.findNext(childNode);
     }
 
-    __getNextHtmlElement()
-    {
+    __getNextHtmlElement() {
         return null;
     }
 

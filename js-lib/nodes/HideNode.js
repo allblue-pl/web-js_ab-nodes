@@ -33,8 +33,7 @@ class HideNode extends Node
     }
 
 
-    constructor()
-    { super();
+    constructor() { super();
         js0.prop(this, HideNode.PChildren, this);
         js0.prop(this, HideNode.PCopyable, this, arguments);
 
@@ -43,16 +42,14 @@ class HideNode extends Node
 
 
     /* Node */
-    __isDisplayed()
-    {
+    __isDisplayed() {
         if (!this.active || this.hide)
             return false;
 
         return this.parentNode.displayed;
     }
 
-    __onActivate()
-    {
+    __onActivate() {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         if (this.hide)
@@ -63,8 +60,7 @@ class HideNode extends Node
         this.refreshDisplayed(true);
     }
 
-    __onDeactivate()
-    {
+    __onDeactivate() {
         if (this.hide)
             return;
 
@@ -73,15 +69,13 @@ class HideNode extends Node
             this.pChildren.get(i).deactivate();
     }
 
-    __getHtmlElement()
-    {
+    __getHtmlElement() {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         return this.parentNode.htmlElement;
     }
 
-    __getFirstHtmlElement()
-    {
+    __getFirstHtmlElement() {
         for (let i = 0; i < this.pChildren.length; i++) {
             let childFirstHtmlElement = this.pChildren.get(i).firstHtmlElement;
             if (childFirstHtmlElement !== null)
@@ -99,16 +93,13 @@ module.exports = HideNode;
 Object.defineProperties(HideNode, {
 
     PChildren: { value:
-    class HideNode_PChildren extends Node.PChildren
-    {
+    class HideNode_PChildren extends Node.PChildren {
 
-        constructor(node)
-        { super(node);
+        constructor(node) { super(node);
 
         }
 
-        __onAddChild(childNode, nextNode)
-        {
+        __onAddChild(childNode, nextNode) {
             // if (nextNode === null)
             //     childNode._nextNode = this._nextNode;
 
@@ -116,8 +107,7 @@ Object.defineProperties(HideNode, {
                 childNode.activate();
         }
 
-        __getNext(childNode)
-        {
+        __getNext(childNode) {
             let nextNode = this.findNext(childNode);
             if (nextNode !== null)
                 return nextNode;
@@ -125,8 +115,7 @@ Object.defineProperties(HideNode, {
             return this.node.nextNode;
         }
 
-        __getNextHtmlElement()
-        {
+        __getNextHtmlElement() {
             return this.node.nextHtmlElement;
         }
 
@@ -140,14 +129,16 @@ Object.defineProperties(HideNode, {
     PCopyable: { value:
     class HideNode_PCopyable extends Node.PCopyable {
 
-        constructor(node, args)
-        { super(node, args);
+        constructor(node, args) { super(node, args);
 
         }
 
-        __createCopy(deepCopy, nodeInstances)
-        {
+        __createCopy(deepCopy, nodeInstances) {
             return new HideNode();
+        }
+
+        __deleteCopy(instanceKeys) {
+            
         }
 
     }},

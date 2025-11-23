@@ -9,8 +9,7 @@ const Node = require('../Node');
 class SingleNode extends Node
 {
 
-    constructor(htmlElementType)
-    { super();
+    constructor(htmlElementType) { super();
         js0.args(arguments, 'string');
         js0.prop(this, SingleNode.PChildren, this);
         js0.prop(this, SingleNode.PCopyable, this, arguments);
@@ -20,16 +19,14 @@ class SingleNode extends Node
 
 
     /* Node */
-    __isDisplayed()
-    {
+    __isDisplayed() {
         if (!this.active)
             return false;
 
         return this.parentNode.displayed;
     }
 
-    __onActivate()
-    {
+    __onActivate() {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         HtmlElement.AddChild(this.parentNode.htmlElement, this._htmlElement,
@@ -40,8 +37,7 @@ class SingleNode extends Node
         this.refreshDisplayed(true);
     }
 
-    __onDeactivate()
-    {
+    __onDeactivate() {
         this.refreshDisplayed(true);
         // for (let i = this.pChildren.length - 1; i >= 0; i--)
         //     this.pChildren.get(i).refreshDisplayed(true);
@@ -49,13 +45,11 @@ class SingleNode extends Node
         HtmlElement.RemoveChild(this.parentNode.htmlElement, this._htmlElement);
     }
 
-    __getHtmlElement()
-    {
+    __getHtmlElement() {
         return this._htmlElement;
     }
 
-    __getFirstHtmlElement()
-    {
+    __getFirstHtmlElement() {
         if (!this.active)
             return null;
 
@@ -70,16 +64,13 @@ module.exports = SingleNode;
 Object.defineProperties(SingleNode, {
 
     PChildren: { value:
-    class SingleNode_PChildren extends Node.PChildren
-    {
+    class SingleNode_PChildren extends Node.PChildren {
 
-        constructor(node)
-        {
+        constructor(node) {
             super(node);
         }
 
-        __onAddChild(childNode, next_node)
-        {
+        __onAddChild(childNode, next_node) {
             childNode.activate();
         }
 
@@ -87,17 +78,18 @@ Object.defineProperties(SingleNode, {
 
 
     PCopyable: { value:
-    class SingleNode_PCopyable extends Node.PCopyable
-    {
+    class SingleNode_PCopyable extends Node.PCopyable {
 
-        constructor(node, args)
-        {
+        constructor(node, args) {
             super(node, args);
         }
 
-        __createCopy(deepCopy, nodeInstances)
-        {
+        __createCopy(deepCopy, nodeInstances) {
             return new SingleNode(this.__args[0]);
+        }
+
+        __deleteCopy(instanceKeys) {
+            
         }
 
     }},

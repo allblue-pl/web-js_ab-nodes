@@ -15,8 +15,7 @@ class RepeatNode_InstanceNode extends Node
         return this._key;
     }
 
-    constructor(repeatNode, key)
-    { super();
+    constructor(repeatNode, key) { super();
         js0.args(arguments, RepeatNode, [ 'number', 'string' ]);
         js0.prop(this, RepeatNode.InstanceNode.PChildren, this);
         // js0.prop(this, RepeatNode.InstanceNode.PCopyable, this);
@@ -27,37 +26,35 @@ class RepeatNode_InstanceNode extends Node
         this._nodeCopies = [];
     }
 
-    addNodeCopy(nodeCopy)
-    {
+    addNodeCopy(nodeCopy) {
         this._nodeCopies.push(nodeCopy);
+    }
+
+    getRepeatNode() {
+        return this._repeatNode;
     }
 
 
     /* Node */
-    __isDisplayed()
-    {
+    __isDisplayed() {
         return this._repeatNode.displayed && this.active;
     }
 
-    __onActivate()
-    {
+    __onActivate() {
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).activate();
     }
 
-    __onDeactivate()
-    {
+    __onDeactivate() {
         for (let i = 0; i < this.pChildren.length; i++)
             this.pChildren.get(i).deactivate();
     }
 
-    __getHtmlElement()
-    {
+    __getHtmlElement() {
         return this._repeatNode.htmlElement;
     }
 
-    __getFirstHtmlElement()
-    {
+    __getFirstHtmlElement() {
         if (this.pChildren.length > 0)
             return this.pChildren.get(0).firstHtmlElement;
 
@@ -72,22 +69,18 @@ module.exports = RepeatNode.InstanceNode;
 Object.defineProperties(RepeatNode.InstanceNode, {
 
     PChildren: { value:
-    class RepeatNode_InstanceNode_PChildren extends Node.PChildren
-    {
+    class RepeatNode_InstanceNode_PChildren extends Node.PChildren {
 
-        constructor(node)
-        { 
+        constructor(node) { 
             super(node);
         }
 
-        __onAddChild(childNode, nextNode)
-        {
+        __onAddChild(childNode, nextNode) {
             if (this.node.active)
                 childNode.activate();
         }
 
-        __getNext(childNode)
-        {
+        __getNext(childNode) {
             let nextNode = this.findNext(childNode);
             if (nextNode !== null)
                 return nextNode;
@@ -102,8 +95,7 @@ Object.defineProperties(RepeatNode.InstanceNode, {
             return this.node._repeatNode._instances.getAt(instanceIndex + 1);
         }
 
-        __getNextHtmlElement()
-        {   
+        __getNextHtmlElement() {   
             /* Not Sure */
             if (!this.node._repeatNode.active)
                 return this.node._repeatNode.nextHtmlElement;

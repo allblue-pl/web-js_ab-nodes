@@ -33,8 +33,7 @@ class ShowNode extends Node
     }
 
 
-    constructor()
-    { super();
+    constructor() { super();
         js0.prop(this, ShowNode.PChildren, this);
         js0.prop(this, ShowNode.PCopyable, this, arguments);
 
@@ -43,16 +42,14 @@ class ShowNode extends Node
 
 
     /* Node */
-    __isDisplayed()
-    {
+    __isDisplayed() {
         if (!this.active || !this.show)
             return false;
 
         return this.parentNode.displayed;
     }
 
-    __onActivate()
-    {
+    __onActivate() {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         if (!this.show)
@@ -63,8 +60,7 @@ class ShowNode extends Node
             this.pChildren.get(i).activate();
     }
 
-    __onDeactivate()
-    {
+    __onDeactivate() {
         if (!this.show)
             return;
 
@@ -73,15 +69,13 @@ class ShowNode extends Node
             this.pChildren.get(i).deactivate();
     }
 
-    __getHtmlElement()
-    {
+    __getHtmlElement() {
         js0.assert(this.parentNode !== null, 'Parent node not set.');
 
         return this.parentNode.htmlElement;
     }
 
-    __getFirstHtmlElement()
-    {
+    __getFirstHtmlElement() {
         for (let i = 0; i < this.pChildren.length; i++) {
             let childFirstHtmlElement = this.pChildren.get(i).firstHtmlElement;
             if (childFirstHtmlElement !== null)
@@ -99,16 +93,13 @@ module.exports = ShowNode;
 Object.defineProperties(ShowNode, {
 
     PChildren: { value:
-    class ShowNode_PChildren extends Node.PChildren
-    {
+    class ShowNode_PChildren extends Node.PChildren {
 
-        constructor(node)
-        { super(node);
+        constructor(node) { super(node);
 
         }
 
-        __onAddChild(childNode, nextNode)
-        {
+        __onAddChild(childNode, nextNode) {
             // if (nextNode === null)
             //     childNode._nextNode = this._nextNode;
 
@@ -116,8 +107,7 @@ Object.defineProperties(ShowNode, {
                 childNode.activate();
         }
 
-        __getNext(childNode)
-        {
+        __getNext(childNode) {
             let nextNode = this.findNext(childNode);
             if (nextNode !== null)
                 return nextNode;
@@ -130,8 +120,7 @@ Object.defineProperties(ShowNode, {
             // return null;
         }
 
-        __getNextHtmlElement()
-        {
+        __getNextHtmlElement() {
             return this.node.nextHtmlElement;
         }
 
@@ -145,14 +134,16 @@ Object.defineProperties(ShowNode, {
     PCopyable: { value:
     class ShowNode_PCopyable extends Node.PCopyable {
 
-        constructor(node, args)
-        { super(node, args);
+        constructor(node, args) { super(node, args);
 
         }
 
-        __createCopy(deepCopy, nodeInstances)
-        {
+        __createCopy(deepCopy, nodeInstances) {
             return new ShowNode();
+        }
+
+        __deleteCopy(instanceKeys) {
+            
         }
 
     }},

@@ -68,8 +68,7 @@ class Node
     }
 
 
-    constructor()
-    {
+    constructor() {
         this._active = false;
         this._displayed = false;
         
@@ -78,8 +77,7 @@ class Node
         this._listeners_OnDisplay = [];
     }
 
-    activate()
-    {
+    activate() {
         if (this.active)
             return;
         this._active = true;
@@ -87,13 +85,11 @@ class Node
         this.__onActivate();
     }
 
-    addListener_OnDisplay(listener)
-    {
+    addListener_OnDisplay(listener) {
         this._listeners_OnDisplay.push(listener);
     }
 
-    deactivate()
-    {
+    deactivate() {
         if (!this.active)
             return;
         this._active = false;
@@ -101,8 +97,7 @@ class Node
         this.__onDeactivate();
     }
 
-    refreshDisplayed(refreshChildren = false)
-    {
+    refreshDisplayed(refreshChildren = false) {
         let displayed = this.__isDisplayed();
         if (this._displayed === displayed)
             return;
@@ -119,8 +114,7 @@ class Node
         }
     }
 
-    removeListener_OnDisplay(listener)
-    {
+    removeListener_OnDisplay(listener) {
         for (let i = this._listeners_OnDisplay.length - 1; i >= 0; i--) {
             if (this._listeners_OnDisplay[i] === listener)
                 this._listeners_OnDisplay.splice(i, 1);
