@@ -1,14 +1,8 @@
-'use strict';
+import js0 from "js0";
+import HtmlElement from "../HtmlElement";
+import Node from "../Node";
 
-const js0 = require('js0');
-
-const HtmlElement = require('../HtmlElement');
-const Node = require('../Node');
-
-
-class TextNode extends Node
-{
-
+export default class TextNode extends Node {
     get text() {
         return this._htmlElement.nodeValue;
     }
@@ -59,11 +53,9 @@ class TextNode extends Node
     /* / Node */
 
 }
-module.exports = TextNode;
 
 
 Object.defineProperties(TextNode, {
-
     PCopyable: { value:
     class TextNode_PCopyable extends Node.PCopyable {
 
@@ -80,5 +72,4 @@ Object.defineProperties(TextNode, {
         }
 
     }},
-
 });

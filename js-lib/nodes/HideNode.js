@@ -1,12 +1,7 @@
-'use strict';
+import js0 from "js0";
+import Node from "../Node";
 
-const js0 = require('js0');
-
-const Node = require('../Node');
-
-
-class HideNode extends Node
-{
+export default class HideNode extends Node {
 
     get hide() {
         return this._hide;
@@ -87,11 +82,9 @@ class HideNode extends Node
     /* / Node */
 
 }
-module.exports = HideNode;
 
 
 Object.defineProperties(HideNode, {
-
     PChildren: { value:
     class HideNode_PChildren extends Node.PChildren {
 
@@ -125,7 +118,6 @@ Object.defineProperties(HideNode, {
 
 
 Object.defineProperties(HideNode, {
-
     PCopyable: { value:
     class HideNode_PCopyable extends Node.PCopyable {
 
@@ -142,5 +134,4 @@ Object.defineProperties(HideNode, {
         }
 
     }},
-
 });

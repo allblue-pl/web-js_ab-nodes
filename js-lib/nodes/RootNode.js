@@ -1,14 +1,8 @@
-'use strict';
+import js0 from "js0";
+import HtmlElement from "../HtmlElement";
+import Node from "../Node";
 
-const js0 = require('js0');
-
-const HtmlElement = require('../HtmlElement');
-const Node = require('../Node');
-
-
-class RootNode extends Node
-{
-
+export default class RootNode extends Node {
     constructor(htmlElement) { super();
         js0.args(arguments, HTMLElement);
         js0.prop(this, RootNode.PChildren, this);
@@ -44,13 +38,10 @@ class RootNode extends Node
             this.pChildren.get(i).deactivate();
     }
     /* / Node.IListener */
-
 }
-module.exports = RootNode;
 
 
 Object.defineProperties(RootNode, {
-
     PChildren: { value:
     class RootNode_PChildren extends Node.PChildren {
 
@@ -64,5 +55,4 @@ Object.defineProperties(RootNode, {
         }
 
     }},
-
 });

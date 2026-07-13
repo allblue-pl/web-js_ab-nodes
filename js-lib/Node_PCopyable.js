@@ -1,13 +1,8 @@
-'use strict';
+import Node from "./Node";
+import js0 from "js0";
+import RepeatNode_InstanceNode from "./nodes/RepeatNode_InstanceNode";
 
-const Node = require('./Node');
-
-const js0 = require('js0');
-
-
-Object.defineProperty(Node, 'PCopyable', { value:
-class Node_PCopyable {
-
+export default class Node_PCopyable {
     static get Property() { return 'pCopyable'; }
 
 
@@ -232,8 +227,7 @@ class Node_PCopyable {
     // }
 
     __addInstance(key, instanceNode) {
-        js0.args(arguments, [ 'string', 'number' ],
-                require('./nodes/RepeatNode').InstanceNode);
+        js0.args(arguments, [ 'string', 'number' ], RepeatNode_InstanceNode);
 
         this._instanceInfos.push({
             key: key,
@@ -252,6 +246,4 @@ class Node_PCopyable {
 
     __createCopy(instanceKeys) { js0.virtual(this); }
     __deleteCopy(instanceKeys) { js0.virtual(this); }
-
-}});
-module.exports = Node.PCopyable;
+}

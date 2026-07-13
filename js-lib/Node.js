@@ -1,10 +1,15 @@
-'use strict';
+import js0 from "js0";
+import Node_PChildren from "./Node_PChildren";
+import Node_PCopyable from "./Node_PCopyable";
 
-const js0 = require('js0');
+export default class Node {
+    static get PChildren() {
+        return Node_PChildren;
+    }
 
-
-class Node
-{
+    static get PCopyable() {
+        return Node_PCopyable;
+    }
 
     get active() {
         return this._active;
@@ -131,6 +136,3 @@ class Node
     __onDeactivate() { js0.virtual(this); }
 
 }
-module.exports = Node;
-require('./Node.PChildren');
-require('./Node.PCopyable');

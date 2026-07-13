@@ -1,13 +1,7 @@
-'use strict';
+import js0 from "js0";
+import Node from "../Node";
 
-const js0 = require('js0');
-
-const Node = require('../Node');
-
-
-class ShowNode extends Node
-{
-
+export default class ShowNode extends Node {
     get show() {
         return this._show;
     }
@@ -87,11 +81,9 @@ class ShowNode extends Node
     /* / Node */
 
 }
-module.exports = ShowNode;
 
 
 Object.defineProperties(ShowNode, {
-
     PChildren: { value:
     class ShowNode_PChildren extends Node.PChildren {
 
@@ -125,12 +117,10 @@ Object.defineProperties(ShowNode, {
         }
 
     }},
-
 });
 
 
 Object.defineProperties(ShowNode, {
-
     PCopyable: { value:
     class ShowNode_PCopyable extends Node.PCopyable {
 
@@ -147,5 +137,4 @@ Object.defineProperties(ShowNode, {
         }
 
     }},
-
 });

@@ -1,12 +1,7 @@
-'use strict';
+import abNodes from "ab-nodes";
+import js0 from "js0";
 
-const abNodes = require('ab-nodes');
-const js0 = require('js0');
-
-
-export default class VirtualNode extends abNodes.Node
-{
-
+export default class VirtualNode extends abNodes.Node {
     constructor() { super();
         js0.prop(this, VirtualNode.PChildren, this);
 
@@ -54,7 +49,6 @@ export default class VirtualNode extends abNodes.Node
 
 
 Object.defineProperties(VirtualNode, {
-
     PChildren: { value:
     class VirtualNode_PChildren extends abNodes.Node.PChildren {
 
@@ -79,5 +73,4 @@ Object.defineProperties(VirtualNode, {
         }
 
     }}
-
 });

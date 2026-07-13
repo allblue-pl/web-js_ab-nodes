@@ -1,11 +1,12 @@
-'use strict';
+import js0 from "js0";
+import Node from "../Node";
+import RepeatNode_InstanceNode from "./RepeatNode_InstanceNode";
 
-const js0 = require('js0');
-const Node = require('../Node');
+export default class RepeatNode extends Node {
+    static get InstanceNode() {
+        return RepeatNode_InstanceNode;
+    }
 
-
-class RepeatNode extends Node
-{
 
     constructor() { super();
         js0.prop(this, RepeatNode.PChildren, this);
@@ -152,13 +153,10 @@ class RepeatNode extends Node
                 null : this._instances.getAt(0).firstHtmlElement;
     }
     /* / Node */
-
 }
-module.exports = RepeatNode;
 
 
 Object.defineProperties(RepeatNode, {
-
     PChildren: { value:
     class extends Node.PChildren {
 
@@ -202,8 +200,4 @@ Object.defineProperties(RepeatNode, {
         }
 
     }},
-
 });
-
-
-require('./RepeatNode.InstanceNode');

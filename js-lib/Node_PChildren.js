@@ -1,13 +1,8 @@
-'use strict';
+import Node from "./Node"
+import js0 from "js0";
+import RepeatNode from "./nodes/RepeatNode";
 
-const Node = require('./Node')
-
-const js0 = require('js0');
-
-
-Object.defineProperty(Node, 'PChildren', { value:
-class Node_PChildren {
-
+export default class Node_PChildren {
     static get Property() { return 'pChildren'; }
 
     get length(){
@@ -78,7 +73,7 @@ class Node_PChildren {
 
                 // /* Copy only first repeat node. */
                 // console.log('Test', nodeCopy === top_node);
-                if (js0.type(childNodeCopy, require('./nodes/RepeatNode')))
+                if (js0.type(childNodeCopy, RepeatNode))
                     continue;
 
                 nodeCopiesStack.push(childNodeCopy);
@@ -204,5 +199,4 @@ class Node_PChildren {
 
     __onAddChild() { js0.virtual(this); }
 
-}});
-module.exports = Node.PChildren;
+}

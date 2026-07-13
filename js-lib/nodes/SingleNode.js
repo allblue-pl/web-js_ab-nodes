@@ -1,14 +1,10 @@
-'use strict';
+import js0 from "js0";
 
-const js0 = require('js0');
-
-const HtmlElement = require('../HtmlElement');
-const Node = require('../Node');
+import HtmlElement from "../HtmlElement";
+import Node from "../Node";
 
 
-class SingleNode extends Node
-{
-
+export default class SingleNode extends Node {
     constructor(htmlElementType) { super();
         js0.args(arguments, 'string');
         js0.prop(this, SingleNode.PChildren, this);
@@ -58,8 +54,6 @@ class SingleNode extends Node
     /* / Node */
 
 }
-module.exports = SingleNode;
-
 
 Object.defineProperties(SingleNode, {
 
@@ -79,7 +73,6 @@ Object.defineProperties(SingleNode, {
 
     PCopyable: { value:
     class SingleNode_PCopyable extends Node.PCopyable {
-
         constructor(node, args) {
             super(node, args);
         }
@@ -91,7 +84,5 @@ Object.defineProperties(SingleNode, {
         __deleteCopy(instanceKeys) {
             
         }
-
     }},
-
 });

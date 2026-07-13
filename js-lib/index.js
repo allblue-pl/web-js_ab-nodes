@@ -1,38 +1,39 @@
-'use strict';
+import js0 from "js0";
+import HideNode from "./nodes/HideNode";
+import Node from "./Node";
+import RepeatNode from "./nodes/RepeatNode";
+import RootNode from "./nodes/RootNode";
+import ShowNode from "./nodes/ShowNode";
+import SingleNode from "./nodes/SingleNode";
+import TextNode from "./nodes/TextNode";
 
-const
-    js0 = require('js0')
-;
-
-class abNodes_Class
-{
-
+export class abNodes_Class {
     get HideNode() {
-        return require('./nodes/HideNode');
+        return HideNode;
     }
 
     get Node() {
-        return require('./Node');
+        return Node;
     }
 
     get RepeatNode() {
-        return require('./nodes/RepeatNode');
+        return RepeatNode;
     }
 
     get RootNode() {
-        return require('./nodes/RootNode');
+        return RootNode;
     }
 
     get ShowNode() {
-        return require('./nodes/ShowNode');
+        return ShowNode;
     }
 
     get SingleNode() {
-        return require('./nodes/SingleNode');
+        return SingleNode;
     }
 
     get TextNode() {
-        return require('./nodes/TextNode');
+        return TextNode;
     }
 
 
@@ -50,6 +51,6 @@ class abNodes_Class
 
         this._debug = debug;
     }
-
 };
-module.exports = new abNodes_Class();
+const abNodes = new abNodes_Class();
+export default abNodes;

@@ -1,13 +1,6 @@
-'use strict';
+import abNodes from "./index";
 
-const
-    abNodes = require('.')
-;
-
-
-class HtmlElement
-{
-
+export default class HtmlElement {
     static AddChild(parentHtmlElement, htmlElement, nextHtmlElement = null) {
         try {
             if (nextHtmlElement === null)
@@ -33,7 +26,4 @@ class HtmlElement
                 console.warn(e);
         }
     }
-
 }
-
-module.exports = HtmlElement;

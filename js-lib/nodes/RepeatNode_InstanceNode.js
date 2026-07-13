@@ -1,16 +1,8 @@
-'use strict';
+import RepeatNode from "./RepeatNode";
+import js0 from "js0";
+import Node from "../Node";
 
-const RepeatNode = require('./RepeatNode');
-
-const js0 = require('js0');
-
-const Node = require('../Node');
-
-
-Object.defineProperty(RepeatNode, 'InstanceNode', { value:
-class RepeatNode_InstanceNode extends Node
-{
-
+export default class RepeatNode_InstanceNode extends Node {
     get key() {
         return this._key;
     }
@@ -62,12 +54,10 @@ class RepeatNode_InstanceNode extends Node
     }
     /* / Node */
 
-}, });
-module.exports = RepeatNode.InstanceNode;
+}
 
 
-Object.defineProperties(RepeatNode.InstanceNode, {
-
+Object.defineProperties(RepeatNode_InstanceNode, {
     PChildren: { value:
     class RepeatNode_InstanceNode_PChildren extends Node.PChildren {
 
@@ -110,7 +100,6 @@ Object.defineProperties(RepeatNode.InstanceNode, {
 
             return this.node._repeatNode.nextHtmlElement;
         }
-
     }},
 
 
@@ -125,5 +114,4 @@ Object.defineProperties(RepeatNode.InstanceNode, {
     //     }
     //
     // }},
-
 });
